@@ -1,29 +1,26 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import createuser from "../models/createuser.js"; // Correct the import path
+import AdminLoginModel from "../models/adminloginmodel"; // Correct the import path
 
-const RegisterRouter = express.Router();
+const RegisterAdmin = express.Router();
 
-RegisterRouter.post("/", async (req, res) => {
+RegisterAdmin.post("/", async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Check if email already exists
-    const emailExist = await createuser.findOne({ email: email });
+    const emailExist = await AdminLoginModel.findOne({ email: email });
     if (emailExist) {
       return res.status(400).json({ message: "Email already in use" });
     }
 
     // Check if username already exists
-    const usernameExist = await createuser.findOne({ username: username });
-    if (usernameExist) {
-      return res.status(401).json({ message: "Username already in use" });
-    }
+    
 
     // Create new user with hashed password
-    const user = await createuser.create({
-      username,
+    const user = await AdminLoginModel.create({
+  
       email,
       password: hashedPassword,
     });
@@ -34,4 +31,4 @@ RegisterRouter.post("/", async (req, res) => {
   }
 });
 
-export default RegisterRouter;
+export default RegisterAdmin;
