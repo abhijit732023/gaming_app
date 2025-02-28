@@ -1,15 +1,21 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import React,{ useState } from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../../ContextApi/contextapi";
 
-const Login = () => {
+
+const AdminLogin = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { login, user } = useAuth();
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3000/login", data);
+      login(data)
+      console.log(user);
+      
+      const response = await axios.post("http://localhost:3000/admin/login", data);
       setSuccessMessage(response.data.message);
       setErrorMessage("");
       // Store user details or token if needed
@@ -23,7 +29,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900">
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl text-white font-bold mb-4 text-center">Login</h2>
+        <h2 className="text-2xl text-white font-bold mb-4 text-center">Admin Login</h2>
         {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
         {successMessage && <p className="text-green-500 text-sm mb-2">{successMessage}</p>}
 
@@ -63,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

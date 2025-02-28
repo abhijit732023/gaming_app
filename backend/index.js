@@ -1,0 +1,21 @@
+import AdminLoginRoute from "./routes/Admin_route/admin_login_route.js";
+import AdminRegisterModel from "./models/Admin/createadmin.js";
+import RegisterRouter from "./routes/User_route/register_route.js";
+import LoginRouter from "./routes/User_route/login_route.js";
+import Admincreate from "./routes/Admin_route/admin_regiroute.js";
+import config from './config/config.js';
+import CreateRoom from "./routes/Tournament_route/create_room_route.js";
+import RoomModel from "./models/Admin/createtournament.js";
+
+export {
+    AdminLoginRoute,
+    RegisterRouter,
+    LoginRouter,
+    Admincreate,
+    config,
+    AdminRegisterModel,
+    RoomModel,
+    CreateRoom
+
+
+}
