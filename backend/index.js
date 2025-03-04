@@ -4,9 +4,10 @@ import RegisterRouter from "./routes/User_route/register_route.js";
 import LoginRouter from "./routes/User_route/login_route.js";
 import Admincreate from "./routes/Admin_route/admin_regiroute.js";
 import config from './config/config.js';
-import CreateRoom from "./routes/Tournament_route/create_room_route.js";
+import CreateRoom from "./routes/Admin_route/create_room_route.js";
 import RoomModel from "./models/Admin/createtournament.js";
-
+import LogoutRouter from "./routes/User_route/logout_route.js";
+import Main_tournament from "./routes/Tournament_route/main_tournament.js";
 export {
     AdminLoginRoute,
     RegisterRouter,
@@ -15,7 +16,9 @@ export {
     config,
     AdminRegisterModel,
     RoomModel,
-    CreateRoom
+    CreateRoom,
+    LogoutRouter,
+    Main_tournament
 
 
 }

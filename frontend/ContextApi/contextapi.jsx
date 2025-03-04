@@ -6,7 +6,7 @@ const AuthContext = createContext();
 // Auth Provider Component
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loggingIn, setLoggingIn] = useState(false); // State for "Logging in..." message
+
 
 
 
@@ -30,17 +30,15 @@ export const AuthProvider = ({ children }) => {
     // Login Function
     const login = (userData) => {
         setUser(userData);
-        setLoggingIn(true);
     };
 
     // Logout Function
     const logout = () => {
         setUser(null);
-        setLoggingIn(false);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout,loggingIn }}>
+        <AuthContext.Provider value={{ user, login, logout,status }}>
             {children}
         </AuthContext.Provider>
     );

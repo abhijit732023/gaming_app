@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import React, { useState } from "react";
+import { useAuth } from "../../FilesPaths/allpath";
 
 export default function RoomForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -25,7 +27,7 @@ export default function RoomForm() {
     }
   };
 
-  return (
+  return user ? (
     <div className="max-w-lg mx-auto p-6 bg-gray-800 text-white rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-4">Create Room</h2>
       {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
@@ -54,9 +56,9 @@ export default function RoomForm() {
           <label className="block mb-1">Room Type</label>
           <select {...register("roomType", { required: "Room Type is required" })} className="w-full p-2 rounded bg-gray-700 border border-gray-600">
             <option value="">Select a room type</option>
-            <option value="erangle">Erangle</option>
-            <option value="miramar">Miramar</option>
-            <option value="shanok">Shanok</option>
+            <option value="Erangle">Erangle</option>
+            <option value="Miramar">Miramar</option>
+            <option value="Shanok">Shanok</option>
           </select>
           {errors.roomType && <p className="text-red-500 text-sm">{errors.roomType.message}</p>}
         </div>
@@ -103,5 +105,7 @@ export default function RoomForm() {
         <button type="submit" className="w-full bg-blue-600 p-2 rounded hover:bg-blue-700">Submit</button>
       </form>
     </div>
+  ) : (
+    <div className="flex justify-center items-center h-screen">Login first</div>
   );
 }
