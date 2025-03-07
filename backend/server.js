@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
+import { Auth_Middleware,Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
 
 const app = express();
 
@@ -19,11 +19,11 @@ app.use(cookieParser());
 // Routes
 app.use('/register', RegisterRouter);
 app.use('/login', LoginRouter);
-app.use('/admin/register', Admincreate);
-app.use('/admin/login', AdminLoginRoute);
-app.use('/admin/create', CreateRoom);
-app.use('/logout', LogoutRouter);
-app.use('/mainpage', Main_tournament); // Ensure this is exported correctly
+app.use('/admin/register',Auth_Middleware, Admincreate);
+app.use('/admin/login',Auth_Middleware,AdminLoginRoute);
+app.use('/admin/create', Auth_Middleware,CreateRoom);
+app.use('/logout',LogoutRouter);
+app.use('/mainpage',Auth_Middleware ,Main_tournament); // Ensure this is exported correctly
 
 // Handle unmatched routes
 app.use((req, res) => {

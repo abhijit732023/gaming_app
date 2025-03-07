@@ -45,7 +45,7 @@ function TournamentDetail() {
       <p className='text-lg mb-2'><strong>Slot:</strong> {tournament?.slot}</p>
       <div className='flex flex-wrap gap-2 mb-4'>
         {Array.from({ length: tournament?.slot }).map((_, index) => (
-          <a key={index}  href={`${id}/slot/${index+1}`}>
+          <a key={index}  href={`${id}/slot${index+1}`}>
             <div className='h-10 w-10 bg-amber-100 text-black flex items-center justify-center'>
               {index + 1}
             </div>

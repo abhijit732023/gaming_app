@@ -8,6 +8,9 @@ import CreateRoom from "./routes/Admin_route/create_room_route.js";
 import RoomModel from "./models/Admin/createtournament.js";
 import LogoutRouter from "./routes/User_route/logout_route.js";
 import Main_tournament from "./routes/Tournament_route/main_tournament.js";
+import Auth_Middleware from "./middleware/auth_middleware.js";
+
+
 export {
     AdminLoginRoute,
     RegisterRouter,
@@ -18,7 +21,8 @@ export {
     RoomModel,
     CreateRoom,
     LogoutRouter,
-    Main_tournament
+    Main_tournament,
+    Auth_Middleware
 
 
 }

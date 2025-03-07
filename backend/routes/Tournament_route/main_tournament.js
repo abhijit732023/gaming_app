@@ -17,6 +17,7 @@ Main_tournament.get('/', async (req, res) => {
 Main_tournament.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        
         const room = await RoomModel.findById(id);
         console.log(room);
         

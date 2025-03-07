@@ -8,15 +8,17 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { user, login, } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate(); 
 
   const onSubmit = async (data) => {
     console.log("Submitting data:", data.email); 
-  
     
     try {
-      const response = await axios.post("http://localhost:3000/login", data);
+      const response = await axios.post("http://localhost:3000/login", data, {
+        withCredentials: true // Include credentials (cookies) in the request to successfully create cookies 
+        
+      });
       setSuccessMessage(response.data.message);
       login(response.data.user);
       console.log('heyy', user); 

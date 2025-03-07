@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     </AuthGuard>),
   },
   {
-    path: '/tournament/:id/slot/:index',
+    path: '/tournament/:id/:index',
     element: (
       <AuthGuard> {/* Protect slots page */}
         <Slot_page />

@@ -29,12 +29,14 @@ LoginRouter.post("/", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" }); 
     }
 
-    // As user gets authenticated, add his info in the context API so we can use it in other pages in the frontend
-
     // Generate a JWT token
     const token = jwt.sign({ userId: user._id, email: user.email, username: user.username }, config.screteCode, { expiresIn: '7d' }); 
     // Set a cookie with the token
-    res.cookie('token', token); 
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false, // Set to true if using HTTPS
+      sameSite: 'Lax' // Adjust as needed
+    }); 
 
     res.status(200).json({ message: "Login successful", user }); 
   } catch (error) { 
