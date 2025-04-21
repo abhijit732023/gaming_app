@@ -1,16 +1,16 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout, TournamentDetail } from './FilesPaths/allpath.js';
+import {TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
 import { AuthProvider } from '../ContextApi/contextapi.jsx';
 import './index.css'; // Import Tailwind CSS
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (<AuthGuard>
-      <Tournament_page />
-    </AuthGuard>),
+    element: (
+      <Home/>
+    ),
   },
   {
     path: '/login',
@@ -46,19 +46,12 @@ const router = createBrowserRouter([
       <Tournament_page />
     </AuthGuard>),
   },
+
   {
-    path: '/tournament/:id/:index',
-    element: (
-      <AuthGuard> {/* Protect slots page */}
-        <Slot_page />
-      </AuthGuard>
-    )
-  },
-  {
-    path: '/tournament/:id',
+    path: '/tournament/tournament_id/:id',
     element: (
       <AuthGuard> {/* Protect tournament details page */}
-        <TournamentDetail />
+        <Slot_page />
       </AuthGuard>
     )
   },
@@ -67,6 +60,62 @@ const router = createBrowserRouter([
     element: (
       <AuthGuard> {/* Ensure only logged-in users can access logout */}
         <Logout />
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/payment/:id/:team_id/:amount',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        <PayNow />
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/admin/edit',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        <AdminTournamentPanel />
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/admin/edit/:id',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        <EditTournament />
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/admin/edit/teams/:id',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        <ShowTeams />
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/admin/edit/teams/unpaid/:id',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        < UnpaidTeams/>
+      </AuthGuard>
+    )
+  },
+  {
+    path: '/admin/edit/teams/paid/:id',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        < PaidTeams/>
+      </AuthGuard>
+    )
+  },
+  {
+    path: 'tournament/detail/:id',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        < TournamentDetail/>
       </AuthGuard>
     )
   }

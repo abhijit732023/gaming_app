@@ -1,11 +1,10 @@
 import React from "react";
-const Container = ({ children, className = "" }) => {
+const Container = ({ children, className = "h-screen w-full", style = {} }) => {
     return (
-      <div className={`max-w-full max-h-full mx-auto px-4 ${className}`}>
-        {children}
-      </div>
+      <div className={`relative ${className}`} style={style}>
+      {children}
+    </div>
     );
   };
-  
-  export default Container;
-  
+
+export default Container;

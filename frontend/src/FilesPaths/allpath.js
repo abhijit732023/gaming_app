@@ -10,9 +10,23 @@ import Logout from "../Pages/UsersPages/logout";
 import { useAuth,AuthProvider } from "../../ContextApi/contextapi";
 import Input from "../components/input_component";
 import Container from "../components/conatiner";
-import TournamentDetail from "../Pages/TournamentsPages/tournament_detail";
 import AuthGuard from "../components/auth_guard";
+import PayNow from "../Pages/UsersPages/slot_payment";
+import AdminTournamentPanel from "../Pages/AdminPages/admin_all_control";
+import EditTournament from "../Pages/AdminPages/edit_tournament";
+import ShowTeams from "../Pages/AdminPages/show_team_admin";
+import UnpaidTeams from "../Pages/AdminPages/admin_unpaid_teams";
+import PaidTeams from "../Pages/AdminPages/admin_paid_team";
+import Home from "../Pages/UsersPages/home";
+import Loading from "../components/loading";
+import TournamentDetail from "../Pages/TournamentsPages/tournament_detail";
+import Header from "../components/header";
+
+
  export {
+    EditTournament,
+    AdminTournamentPanel,
+    PayNow,
     UserRegister,
     UserLogin,
     AdminLogin,
@@ -26,8 +40,13 @@ import AuthGuard from "../components/auth_guard";
     useAuth,
     Input,
     Container,
-    TournamentDetail,
     AuthGuard,
-    
+    ShowTeams,
+    UnpaidTeams,
+    PaidTeams,
+    Home,
+    Loading,
+    TournamentDetail,
+    Header,
 }
 

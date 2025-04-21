@@ -5,18 +5,9 @@ import createuser from "../../models/Users/createuser.js"; // Correct the import
 const RegisterRouter = express.Router();
 
 RegisterRouter.post("/", async (req, res) => {
-  console.log(req.cookies);
-  
   try {
     const { username, email, password } = req.body;
-    console.log("Received data:", req.body); // Log the received data
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Check if email already exists
-    const emailExist = await createuser.findOne({ email: email });
-    if (emailExist) {
-      return res.status(400).json({ message: "Email already in use" });
-    }
+    console.log("Received registration data:", req.body); // Log the received data
 
     // Check if username already exists
     const usernameExist = await createuser.findOne({ username: username });
@@ -24,11 +15,21 @@ RegisterRouter.post("/", async (req, res) => {
       return res.status(401).json({ message: "Username already in use" });
     }
 
+    // Check if email already exists
+    const emailExist = await createuser.findOne({ email: email });
+    if (emailExist) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+
+    // Hash the password before storing it
+    const saltRounds = 10; // Number of salt rounds for bcrypt
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     // Create new user with hashed password
     const user = await createuser.create({
       username, // Ensure username is included
       email,
-      password: hashedPassword,
+      password: hashedPassword, // Store the hashed password
     });
 
     console.log("User registered successfully:", user); // Log the successful registration

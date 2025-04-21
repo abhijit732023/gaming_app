@@ -14,7 +14,7 @@ const AuthGuard = ({ children }) => {
       const timer = setTimeout(() => {
         navigate('/login'); // Redirect to login if user is not found
       }, 3000); // Redirect after 3 seconds
-      
+
       return () => clearTimeout(timer); // Clean up timeout
     } else {
       setLoading(false); // Stop loading when user is found
@@ -23,8 +23,18 @@ const AuthGuard = ({ children }) => {
 
   if (loading) {
     return (
-      <div className='w-full h-screen bg-gray-900 flex items-center justify-center'>
-        <p className='text-white text-xl'>{warning || 'Checking authentication...'}</p>
+      <div className="w-full h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-yellow-500 mb-4 animate-bounce">
+            {warning || 'Checking authentication...'}
+          </h1>
+          <p className="text-gray-300 text-lg">
+            Redirecting you to the login page in a moment...
+          </p>
+        </div>
+        <div className="mt-8">
+          <div className="w-16 h-16 border-4 border-yellow-500 border-dashed rounded-full animate-spin"></div>
+        </div>
       </div>
     );
   }

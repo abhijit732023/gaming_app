@@ -1,1 +1,14 @@
 @import "tailwindcss";
+@font-face {
+  font-family: 'Drawliner';
+  src: url('/fonts/Drawliner.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TheValentino';
+  src: url('/fonts/TheValentino.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

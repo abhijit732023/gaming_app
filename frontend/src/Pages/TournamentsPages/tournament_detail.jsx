@@ -1,63 +1,164 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { Loading } from "../../FilesPaths/allpath.js";
+import {
+  FaGamepad,
+  FaCalendarAlt,
+  FaClock,
+  FaMoneyBill,
+  FaTrophy,
+  FaUsers,
+  FaMapMarkedAlt,
+  FaCheckCircle
+} from "react-icons/fa";
+import BgImage from "../images/pubg-mobile-golden-pharaoh-x-suit-playerunknowns-3840x2160-2631.jpg";
 
-function TournamentDetail() {
-  const { id } = useParams(); // Access the dynamic route parameter
+const TournamentDetail = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [tournament, setTournament] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTournament = async () => {
+    const fetchTournamentDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/mainpage/${id}`);
-        if (!response.ok) {
-          throw new Error('Tournament not found');
-        }
-        const data = await response.json();
-        setTournament(data.room); // Ensure this matches your API response structure
+        const response = await axios.get(`http://localhost:3000/mainpage/${id}`, {
+          withCredentials: true,
+        });
+        setTournament(response.data.room);
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        setError("Failed to fetch tournament details.");
       }
     };
-
-    fetchTournament();
+    fetchTournamentDetails();
   }, [id]);
 
-  if (loading) {
-    return <div className="w-full h-screen flex justify-center items-center text-white">Loading...</div>;
-  }
+  const handleSlotRegister = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate(`/tournament/tournament_id/${id}`);
+      setIsNavigating(false);
+    }, 1500);
+  };
 
-  if (error) {
-    return <div className="w-full h-screen flex justify-center items-center text-red-500">{error}</div>;
+  if (isNavigating || !tournament) {
+    return (
+      <div
+        className="flex items-center justify-center min-h-screen text-white relative"
+        style={{
+          backgroundImage: `url(${BgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/30 opacity-30"></div>
+        <Loading />
+      </div>
+    );
   }
 
   return (
-    <div className='w-full min-h-screen bg-gray-900 p-6 text-white'>
-      <h1 className='text-4xl font-bold mb-4'>{tournament?.roomType || "Tournament Details"}</h1>
-      <p className='text-lg mb-2'><strong>ID:</strong> {tournament?._id}</p>
-      <p className='text-lg mb-2'><strong>Room ID:</strong> {tournament?.roomId}</p>
-      <p className='text-lg mb-2'><strong>Date and Time:</strong> {new Date(tournament?.dateTime).toLocaleString()}</p>
-      <p className='text-lg mb-2'><strong>Entry Fee:</strong> {tournament?.entryFee}</p>
-      <p className='text-lg mb-2'><strong>Price:</strong> {tournament?.price}</p>
-      <p className='text-lg mb-2'><strong>Slot:</strong> {tournament?.slot}</p>
-      <div className='flex flex-wrap gap-2 mb-4'>
-        {Array.from({ length: tournament?.slot }).map((_, index) => (
-          <a key={index}  href={`${id}/slot${index+1}`}>
-            <div className='h-10 w-10 bg-amber-100 text-black flex items-center justify-center'>
-              {index + 1}
-            </div>
-          </a>
+    <div
+      className="relative min-h-screen flex items-center justify-center px-4 py-10"
+      style={{
+        backgroundImage: `url(${BgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-black opacity-70"></div>
+  
+      <div>
+        {/* Gear Up Heading */}
+      <motion.h2
+        className="relative z-10 text-3xl md:text-4xl font-extrabold text-center text-yellow-400 drop-shadow-lg mb-8"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        🎮 Gear Up. Drop In. Win Big.
+      </motion.h2>
+  
+      {/* Details Card */}
+      <motion.div
+        className="relative z-10 max-w-5xl w-full bg-white/10 backdrop-blur-md rounded-xl shadow-2xl text-white p-8 space-y-6"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h1 className="text-4xl font-extrabold text-yellow-400 mb-4 text-center">
+          {tournament?.name}
+        </h1>
+  
+        <div className="grid md:grid-cols-2 gap-6">
+  <div className="space-y-3 text-lg">
+    
+    <p>
+      <FaUsers className="inline mr-2 text-green-300" /> <strong>Total Teams:</strong>{" "}
+      {tournament?.totalTeams || "16"}
+    </p>
+    <p>
+      <FaMapMarkedAlt className="inline mr-2 text-purple-300" /> <strong>Map:</strong>{" "}
+      {tournament?.roomType || "Erangel"}
+    </p>
+    <p>
+      <FaMoneyBill className="inline mr-2 text-yellow-300" /> <strong>Entry Fee:</strong> ₹
+      {tournament?.entryFee}
+    </p>
+    <p>
+      <FaTrophy className="inline mr-2 text-pink-400" /> <strong>Prize:</strong> ₹
+      {tournament?.price}
+    </p>
+    <p>
+      <FaCalendarAlt className="inline mr-2 text-orange-300" /> <strong>Date:</strong>{" "}
+      {new Date(tournament?.dateTime).toLocaleDateString()}
+    </p>
+    <p>
+      <FaClock className="inline mr-2 text-cyan-300" /> <strong>Time:</strong>{" "}
+      {new Date(tournament?.dateTime).toLocaleTimeString()}
+    </p>
+    <p>
+      <FaUsers className="inline mr-2 text-red-400" /> <strong>Match Type:</strong>{" "}
+      {tournament?.gameMode || "Unknown"}
+    </p>
+  </div>
 
-        ))}
+  <div className="bg-white/5 p-4 rounded-md max-h-60 overflow-y-auto space-y-2">
+    <h2 className="text-xl font-semibold text-yellow-300 mb-2">📜 Rules & Guidelines</h2>
+    <ul className="list-disc list-inside text-sm space-y-1">
+      <li>No emulators allowed.</li>
+      <li>Team must check-in 15 mins before match start.</li>
+      <li>Hacking/cheating leads to permanent ban.</li>
+      <li>Only mobile devices are allowed.</li>
+      <li>Team kill = point.</li>
+      <li>Use same team name during registration.</li>
+    </ul>
+  </div>
+</div>
+  
+        <div className="mt-6">
+          <p className="text-md text-gray-200">
+            <FaCheckCircle className="inline mr-2 text-green-400" />
+            {tournament?.description ||
+              "Join the ultimate battleground and fight for glory and cash prizes!"}
+          </p>
+        </div>
+  
+        <div className="text-center mt-8">
+          <button
+            onClick={handleSlotRegister}
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
+          >
+            🚀 Register Now
+          </button>
+        </div>
+      </motion.div>
       </div>
-      <p className='text-lg mb-2'><strong>Description:</strong> {tournament?.description}</p>
-      <p className='text-lg mb-2'><strong>Created At:</strong> {new Date(tournament?.createdAt).toLocaleString()}</p>
-      <p className='text-lg mb-2'><strong>Updated At:</strong> {new Date(tournament?.updatedAt).toLocaleString()}</p>
     </div>
   );
-}
+};
 
 export default TournamentDetail;

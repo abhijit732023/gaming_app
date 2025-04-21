@@ -9,9 +9,17 @@ import RoomModel from "./models/Admin/createtournament.js";
 import LogoutRouter from "./routes/User_route/logout_route.js";
 import Main_tournament from "./routes/Tournament_route/main_tournament.js";
 import Auth_Middleware from "./middleware/auth_middleware.js";
+import PaymentRouter from "./routes/User_route/slot_payment_route.js";
+import Admin_fullcontrol_route from "./routes/Admin_route/adminRoutes.js";
+import Slot_regi from './models/Tournament/slot_register.js';
+import Slot_regi_router from "./routes/Tournament_route/team_register.js";
 
 
 export {
+    Slot_regi_router,
+    Slot_regi,
+    Admin_fullcontrol_route,
+    PaymentRouter,
     AdminLoginRoute,
     RegisterRouter,
     LoginRouter,
