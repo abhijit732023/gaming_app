@@ -44,7 +44,7 @@ const Login = () => {
     <div
       className="relative overflow-hidden bg-black flex justify-center items-center min-h-screen text-white"
       style={{
-        backgroundImage: `url(${bgImage}?v=1)`,
+        backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
