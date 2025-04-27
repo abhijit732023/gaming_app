@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../../FilesPaths/allpath";
+import { ENV_File, useAuth } from "../../FilesPaths/allpath";
 import { useNavigate } from "react-router-dom";
-import BgImage from "../images/form1.jpg"; // Add your background image path here
+import BgImage from "../images/form1.webp"; // Add your background image path here
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 
 function Mytournament() {
@@ -20,7 +20,7 @@ function Mytournament() {
       }
       try {
         const response = await axios.get(
-          `http://192.168.0.106:3000/team/mytournament/user/${user._id}`,
+          `${ENV_File.backendURL}/team/mytournament/user/${user._id}`,
           { withCredentials: true }
         );
         console.log("Fetched mytournaments:", response.data.teams);
@@ -55,7 +55,7 @@ function Mytournament() {
     <div
       className="min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url(${BgImage})`, // Set the background image
+        backgroundImage: `url(${BgImage}?v=1)`, // Set the background image
       }}
     >
       {/* Black overlay */}

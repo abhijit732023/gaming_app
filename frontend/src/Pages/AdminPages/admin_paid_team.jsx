@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
-import BgImage from "../images/money2.jpg"; // Add your background image path
+import BgImage from "../images/money2.webp"; // Add your background image path
+import { ENV_File } from "../../FilesPaths/allpath";
 
 export default function PaidTeams() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ export default function PaidTeams() {
 
   const fetchTeams = async () => {
     try {
-      const response = await axios.get(`http://192.168.0.106:3000/team/teamss/${id}`);
+      const response = await axios.get(`${ENV_File.backendURL}/team/teamss/${id}`);
       const paidTeams = response.data.teams.filter((team) => team.paymentStatus === "paid");
       setTeams(paidTeams);
       setLoading(false);
@@ -31,7 +32,7 @@ export default function PaidTeams() {
     const confirmDelete = window.confirm("Are you sure you want to delete this team?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://192.168.0.106:3000/team/delete/${teamId}`);
+        await axios.delete(`${ENV_File.backendURL}/team/delete/${teamId}`);
         setTeams(teams.filter((team) => team._id !== teamId));
       } catch (error) {
         setError("Error deleting team.");
@@ -43,7 +44,7 @@ export default function PaidTeams() {
     <div
       className="w-full min-h-screen flex flex-col items-center justify-center relative"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

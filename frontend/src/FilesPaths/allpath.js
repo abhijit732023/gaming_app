@@ -24,7 +24,7 @@ import Header from "../components/header";
 import MobileMenu from "../components/mobile_menu";
 import Mytournament from "../Pages/UsersPages/mytournament";
 import Email_sendPage from "../Pages/AdminPages/email_send";
-
+import ENV_File from "../../config/config";
  export {
     EditTournament,
     AdminTournamentPanel,
@@ -53,5 +53,6 @@ import Email_sendPage from "../Pages/AdminPages/email_send";
     MobileMenu,
     Mytournament,
     Email_sendPage,
+    ENV_File,
 }
 

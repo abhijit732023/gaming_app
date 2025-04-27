@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FaEdit, FaTrash, FaUsers } from "react-icons/fa";
 import { MdDateRange, MdConfirmationNumber, MdSchedule } from "react-icons/md";
 import { GiLaurelsTrophy } from "react-icons/gi";
+import { ENV_File } from "../../FilesPaths/allpath";
 
 export default function AdminTournamentPanel() {
   const [tournaments, setTournaments] = useState([]);
@@ -17,7 +18,7 @@ export default function AdminTournamentPanel() {
 
   const fetchTournaments = async () => {
     try {
-      const response = await axios.get("http://192.168.0.106:3000/admin/tournaments");
+      const response = await axios.get(`${ENV_File.backendURL}/admin/tournaments`);
       setTournaments(response.data);
     } catch (error) {
       setError("Error fetching tournaments");
@@ -27,7 +28,7 @@ export default function AdminTournamentPanel() {
   const deleteTournament = async (id) => {
     if (window.confirm("Are you sure you want to delete this tournament?")) {
       try {
-        await axios.delete(`http://192.168.0.106:3000/admin/tournament/${id}`);
+        await axios.delete(`${ENV_File.backendURL}/admin/tournament/${id}`);
         setTournaments((prev) => prev.filter((t) => t._id !== id));
       } catch (error) {
         alert("Error deleting tournament");

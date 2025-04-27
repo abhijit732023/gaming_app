@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Loading } from "../../FilesPaths/allpath.js";
+import { ENV_File, Loading } from "../../FilesPaths/allpath.js";
 import {
   FaGamepad,
   FaCalendarAlt,
@@ -13,7 +13,7 @@ import {
   FaMapMarkedAlt,
   FaCheckCircle,
 } from "react-icons/fa";
-import BgImage from "../images/pubg-mobile-golden-pharaoh-x-suit-playerunknowns-3840x2160-2631.jpg";
+import BgImage from "../images/Xsuit.webp"; // Add your background image path
 
 const TournamentDetail = () => {
   const { id } = useParams();
@@ -25,7 +25,7 @@ const TournamentDetail = () => {
   useEffect(() => {
     const fetchTournamentDetails = async () => {
       try {
-        const response = await axios.get(`http://192.168.0.106:3000/mainpage/${id}`, {
+        const response = await axios.get(`${ENV_File.backendURL}/mainpage/${id}`, {
           withCredentials: true,
         });
         setTournament(response.data.room);
@@ -49,7 +49,7 @@ const TournamentDetail = () => {
       <div
         className="flex items-center justify-center min-h-screen text-white relative"
         style={{
-          backgroundImage: `url(${BgImage})`,
+          backgroundImage: `url(${BgImage}?v=1)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

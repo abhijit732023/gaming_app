@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../FilesPaths/allpath";
 import { useNavigate } from "react-router-dom";
-import BgImage from "../images/creator.jpg"; // Replace with your image path
+import BgImage from "../images/creator.webp"; // Replace with your image path
 
 export default function RoomForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -45,7 +45,7 @@ export default function RoomForm() {
 <div
   className="min-h-screen flex justify-center items-center px-4 relative"
   style={{
-    backgroundImage: `url(${BgImage})`,
+    backgroundImage: `url(${BgImage}?v=1)`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   }}

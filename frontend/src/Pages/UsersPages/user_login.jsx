@@ -3,11 +3,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useAuth } from "../../../ContextApi/contextapi";
 import { useNavigate, Link } from "react-router-dom";
-import bgImage from "../images/pubg-level-3-helmet-3840x2160-864.jpg"; // Adjust the path as needed
+import bgImage from "../images/login.webp"; // Adjust the path as needed
 import { Leapfrog } from "ldrs/react";
-import {Loading} from "../../FilesPaths/allpath.js"; // Import the loading animation component
+import {Loading,ENV_File} from "../../FilesPaths/allpath.js"; // Import the loading animation component
 
 const Login = () => {
+  console.log(ENV_File.backendURL);
+  
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -19,7 +21,7 @@ const Login = () => {
     console.log("Submitting data:", data.email);
 
     try {
-      const response = await axios.post("http://192.168.0.106:3000/login", data, {
+      const response = await axios.post(`${ENV_File.backendURL}/login`, data, {
         withCredentials: true, // Include credentials (cookies) in the request to successfully create cookies
       });
       setSuccessMessage(response.data.message);
@@ -42,7 +44,7 @@ const Login = () => {
     <div
       className="relative overflow-hidden bg-black flex justify-center items-center min-h-screen text-white"
       style={{
-        backgroundImage: `url(${bgImage})`,
+        backgroundImage: `url(${bgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

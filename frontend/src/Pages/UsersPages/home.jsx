@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { FaUserCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
-import Bgimage from "../images/register2.jpg"; // Adjust path as needed
-import BgIImage from "../images/home2.png"; // Adjust path as needed
-import homeimage from "../images/home3.png"; // Adjust path as needed
+import Bgimage from "../images/register2.webp"; // Adjust path as needed
+import BgIImage from "../images/home2.webp"; // Adjust path as needed
+import homeimage from "../images/home3.webp"; // Adjust path as needed
 import { Header, MobileMenu } from "../../FilesPaths/allpath"; // Import the Header and MobileMenu components
 
 const Home = () => {
@@ -44,7 +44,7 @@ const Home = () => {
       <section
         className="relative flex flex-col md:flex-row items-center justify-center md:justify-between max-w-full h-screen mx-auto px-6 py-16"
         style={{
-          backgroundImage: `url(${windowWidth < 700 ? homeimage : BgIImage})`, // Dynamically switch based on screen width
+          backgroundImage: `url(${windowWidth < 700 ? homeimage : BgIImage}?v=1)`, // Dynamically switch based on screen width
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -85,7 +85,7 @@ const Home = () => {
 
       <div
         style={{
-          backgroundImage: `url(${Bgimage})`,
+          backgroundImage: `url(${Bgimage}?v=1)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

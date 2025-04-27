@@ -4,7 +4,8 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { ArrowLeft, Info, Trophy, CalendarDays, Gamepad2 } from "lucide-react";
-import BgImage from "../images/creator.jpg";
+import BgImage from "../images/creator.webp";
+import { ENV_File } from "../../FilesPaths/allpath";
 
 export default function EditTournament() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ export default function EditTournament() {
 
   const fetchTournament = async () => {
     try {
-      const response = await axios.get(`http://192.168.0.106:3000/admin/tournament/${id}`);
+      const response = await axios.get(`${ENV_File.backendURL}/admin/tournament/${id}`);
       const data = response.data.tournament;
       console.log("Fetched tournament data:", data); // Log the fetched data
 
@@ -40,7 +41,7 @@ export default function EditTournament() {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.put(`http://192.168.0.106:3000/admin/tournament/${id}`, formData);
+      await axios.put(`${ENV_File.backendURL}/admin/tournament/${id}`, formData);
       setSuccessMessage("Tournament updated successfully!");
       setTimeout(() => {
         setSuccessMessage(""); // Clear success message after 3 seconds
@@ -56,7 +57,7 @@ export default function EditTournament() {
     <div
       className="min-h-screen flex justify-center items-center px-4 relative"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

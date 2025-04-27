@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import BgImage from "../images/money2.jpg"; // Add your background image path
+import BgImage from "../images/money.webp"; // Add your background image path
+import { ENV_File } from "../../FilesPaths/allpath";
 
 export default function ShowTeams() {
   const { id } = useParams();
@@ -16,7 +17,7 @@ export default function ShowTeams() {
 
   const fetchTeams = async () => {
     try {
-      await axios.get(`http://192.168.0.106:3000/team/teamss/${id}`);
+      await axios.get(`${ENV_File.backendURL}/team/teamss/${id}`);
       setLoading(false);
     } catch (error) {
       setError("Error fetching team registrations.");
@@ -28,7 +29,7 @@ export default function ShowTeams() {
     <div
       className="w-full min-h-screen backdrop-blur-2xl flex flex-col items-center justify-center relative"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

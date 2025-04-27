@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import BgImage from "../images/money2.jpg"; // Add your background image path
+import BgImage from "../images/money2.webp"; // Add your background image path
+import { ENV_File } from "../../FilesPaths/allpath";
 
 export default function PayNow() {
   const [payment, setPaymentState] = useState(false);
   const [countdown, setCountdown] = useState(5); // Countdown state
-  const { team_id, id, amount, userId } = useParams();
+  const { team_id, id, amount, userid } = useParams(); // Extract params
   const navigate = useNavigate(); // Initialize navigate function
+
+  useEffect(() => {
+    console.log({ team_id, id, amount, userid }); // Debugging
+  }, [team_id, id, amount, userid]); // Log params on component mount
 
   useEffect(() => {
     if (payment) {
@@ -16,9 +21,9 @@ export default function PayNow() {
         setCountdown((prev) => {
           if (prev === 1) {
             clearInterval(countdownInterval);
-            // Use a timeout to ensure navigation happens after rendering
+            // Navigate directly using userid from useParams
             setTimeout(() => {
-              navigate(`/mytournament/${userId}`); // Navigate after countdown
+              navigate(`/mytournament/${userid}`); // Use userid directly
             }, 0);
           }
           return prev - 1;
@@ -27,11 +32,11 @@ export default function PayNow() {
 
       return () => clearInterval(countdownInterval); // Cleanup interval on unmount
     }
-  }, [payment, navigate, userId]);
+  }, [payment, navigate, userid]);
 
   const handlePayment = async () => {
     try {
-      const response = await axios.post("http://192.168.0.106:3000/payment/request", {
+      const response = await axios.post(`${ENV_File.backendURL}/payment/request`, {
         amount: amount,
       });
 
@@ -47,7 +52,7 @@ export default function PayNow() {
         handler: async function (response) {
           console.log("Payment Response:", response);
           try {
-            await axios.post("http://192.168.0.106:3000/payment/verify", {
+            await axios.post(`${ENV_File.backendURL}/payment/verify`, {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
               razorpay_signature: response.razorpay_signature,
@@ -80,7 +85,7 @@ export default function PayNow() {
     <div
       className="min-h-screen flex items-center justify-center text-white bg-gray-100 px-4"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

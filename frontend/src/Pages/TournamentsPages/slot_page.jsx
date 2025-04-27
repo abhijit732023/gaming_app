@@ -5,8 +5,8 @@ import Container from "../../components/conatiner";
 import axios from "axios";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import BgImage from "../images/pubg-mobile-golden-pharaoh-x-suit-playerunknowns-3840x2160-2631.jpg";
-import { useAuth } from "../../FilesPaths/allpath";
+import BgImage from "../images/Xsuit.webp";
+import { useAuth,ENV_File } from "../../FilesPaths/allpath";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 10 },
@@ -39,12 +39,12 @@ const SlotPage = () => {
     }
     const fetchTournamentDetails = async () => {
       try {
-        const slotRes = await axios.get(`http://192.168.0.106:3000/team/${id}/slots`, { withCredentials: true });
+        const slotRes = await axios.get(`${ENV_File.backendURL}/team/${id}/slots`, { withCredentials: true });
         setTakenSlots(slotRes.data.takenSlots || []);
         console.log("Taken Slots:", slotRes.data.takenSlots);
         
 
-        const response = await axios.get(`http://192.168.0.106:3000/mainpage/${id}`, { withCredentials: true });
+        const response = await axios.get(`${ENV_File.backendURL}/mainpage/${id}`, { withCredentials: true });
         const tournamentData = response.data?.room;
         console.log("Tournament Data:", tournamentData);
         
@@ -85,7 +85,7 @@ const SlotPage = () => {
         roomType: tournament.roomType, // Add roomType from tournament details
       };
 
-      const response = await axios.post("http://192.168.0.106:3000/team/register", requestData, {
+      const response = await axios.post(`${ENV_File.backendURL}/team/register`, requestData, {
         withCredentials: true,
       });
 
@@ -141,7 +141,7 @@ const SlotPage = () => {
     <Container
       className="bg-black min-h-screen overflow-scroll relative"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

@@ -3,8 +3,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../ContextApi/contextapi";
-import BgImage from "../images/register.jpg"; // Add your background image path
-import { Loading } from "../../FilesPaths/allpath.js"; // Import Loading component
+import BgImage from "../images/register.webp"; // Add your background image path
+import { Loading,ENV_File } from "../../FilesPaths/allpath.js"; // Import Loading component
+
 
 export default function UserRegister() {
   const [message, setMessage] = useState("");
@@ -26,7 +27,7 @@ export default function UserRegister() {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post("http://192.168.0.106:3000/register", data);
+        const response = await axios.post(`${ENV_File.backendURL}/register`, [data,role="User"]);
         console.log("User registered:", response.data);
         setMessage("User registered successfully!");
         setIsRegistered(true); // Set registration status to true
@@ -56,7 +57,7 @@ export default function UserRegister() {
     <div
       className="min-h-screen flex items-center justify-center relative"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

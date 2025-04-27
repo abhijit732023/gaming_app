@@ -2,8 +2,8 @@ import React from "react";
 import { useAuth } from "../../../ContextApi/contextapi";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import BgImage from "../images/pubg-playerunknowns-battlegrounds-2020-games-5k-8k-8192x3510-218.jpg";
-import { Header, MobileMenu } from "../../FilesPaths/allpath"; // Import the Header and MobileMenu components
+import BgImage from "../images/profile.webp";
+import { Header, MobileMenu,ENV_File } from "../../FilesPaths/allpath"; // Import the Header and MobileMenu components
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -23,7 +23,7 @@ const Profile = () => {
     <div
       className="relative min-h-screen bg-gray-900 text-white flex flex-col"
       style={{
-        backgroundImage: `url(${BgImage})`,
+        backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

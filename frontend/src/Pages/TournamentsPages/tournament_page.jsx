@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Container, Loading, MobileMenu, Header } from "./../../FilesPaths/allpath.js"; // Import MobileMenu and Header components
+import { Container, Loading, MobileMenu, Header,ENV_File } from "./../../FilesPaths/allpath.js"; // Import MobileMenu and Header components
 import { motion } from "framer-motion";
 import BgImage from "../images/bg.jpg"; // Add background image
-import MRmage from "../images/miramar.png"; // Add Miramar image
-import ERmage from "../images/erangle.png"; // Add Erangle image
-import SHImage from "../images/shanok.png"; // Add Shanok image
-import Joinus from "../images/joinus.png"; // Add Join Us image
+import MRmage from "../images/miramar.webp"; // Add Miramar image
+import ERmage from "../images/erangle.webp"; // Add Erangle image
+import SHImage from "../images/shanok.webp"; // Add Shanok image
+import Joinus from "../images/joinus.webp"; // Add Join Us image
 
 export default function TournamentPage() {
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ export default function TournamentPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://192.168.0.106:3000/mainpage", {
+        const response = await axios.get(`${ENV_File.backendURL}/mainpage`, {
           withCredentials: true,
         });
 
@@ -57,7 +57,7 @@ export default function TournamentPage() {
       <Container
         className={`w-full min-h-screen bg-cover bg-center relative`}
         style={{
-          backgroundImage: `url(${BgImage})`, // Ensure the image path is correct
+          backgroundImage: `url(${BgImage}?v=1)`, // Ensure the image path is correct
           backgroundSize: "cover", // Ensure the image covers the entire container
           backgroundPosition: "center", // Center the image
           backgroundRepeat: "no-repeat", // Prevent the image from repeating
@@ -110,12 +110,12 @@ export default function TournamentPage() {
                   <img
                     src={
                       tournament.roomType.toLowerCase() === "erangle"
-                        ? `${ERmage}`
+                        ? `${ERmage}?v=1`
                         : tournament.roomType.toLowerCase() === "miramar"
-                        ? `${MRmage}`
+                        ? `${MRmage}?v=1`
                         : tournament.roomType.toLowerCase() === "shanok"
-                        ? `${SHImage}`
-                        : `${BgImage}`
+                        ? `${SHImage}?v=1`
+                        : `${BgImage}?v=1`
                     }
                     alt={tournament.roomType}
                     className="w-full h-full object-cover"
