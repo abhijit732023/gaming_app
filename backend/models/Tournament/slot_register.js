@@ -10,6 +10,7 @@ const TeamSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // Reference to the User model
+      required: true,
     },
     teamName: {
       type: String,
@@ -31,6 +32,22 @@ const TeamSchema = new mongoose.Schema(
     },
     paymentAmount: { type: Number, required: true }, // Field for storing payment amount
     paymentStatus: { type: String, enum: ["pending", "paid"], default: "pending" }, // Default is pending
+    dateTime: {
+      type: Date,
+      required: true, // Field for storing the date and time of the tournament
+    },
+    entryFee: {
+      type: Number,
+      required: true, // Field for storing the entry fee
+    },
+    gameMode: {
+      type: String,
+      required: true, // Field for storing the game mode (e.g., solo, duo, squad)
+    },
+    roomType: {
+      type: String,
+      required: true, // Field for storing the room type (e.g., Erangel, Miramar)
+    },
   },
   { timestamps: true }
 );

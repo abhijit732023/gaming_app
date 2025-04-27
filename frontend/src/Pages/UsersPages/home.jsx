@@ -5,89 +5,48 @@ import { FaUserCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Bgimage from "../images/register2.jpg"; // Adjust path as needed
 import BgIImage from "../images/home2.png"; // Adjust path as needed
+import homeimage from "../images/home3.png"; // Adjust path as needed
+import { Header, MobileMenu } from "../../FilesPaths/allpath"; // Import the Header and MobileMenu components
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Tournaments", path: "/tournament" },
-    { name: "Register", path: "/register" },
-  ];
-
   useEffect(() => {
-    const userStatus = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(userStatus === "true");
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
-  const handleProfileClick = () => {
-    if (!isLoggedIn) {
-      navigate("/profile");
-    }
-  };
+
 
   return (
     <div className=" min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
       {/* Header */}
-      <header className="bg-black text-white shadow-lg sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-yellow-500">
-            BGMI Tournaments
-          </Link>
+      <div className="hidden md:block">
+        <Header />
+      </div>
 
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="hover:text-yellow-500 transition"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button onClick={handleProfileClick} className="ml-4 text-2xl">
-              <FaUserCircle />
-            </button>
-          </nav>
-
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-white">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {isOpen && (
-          <div className="md:hidden bg-gray-900 px-4 pb-4 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="block text-white hover:text-yellow-500"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button
-              onClick={handleProfileClick}
-              className="block text-white hover:text-yellow-500 pt-2"
-            >
-              Profile
-            </button>
-          </div>
-        )}
-      </header>
-
+      {/* Mobile Menu for smaller screens */}
+      <div className="absolute md:hidden ">
+        <MobileMenu />
+      </div>
       {/* Hero Section */}
       <section
-        className="relative flex flex-col md:flex-row items-center justify-between max-w-full h-screen mx-auto px-6 py-16"
+        className="relative flex flex-col md:flex-row items-center justify-center md:justify-between max-w-full h-screen mx-auto px-6 py-16"
         style={{
-          backgroundImage: `url(${BgIImage})`, // Ensure the image path is correct
+          backgroundImage: `url(${windowWidth < 700 ? homeimage : BgIImage})`, // Dynamically switch based on screen width
           backgroundSize: "cover",
-          backgroundPosition: "center  ", // Moves the background image slightly down
+          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
@@ -96,7 +55,7 @@ const Home = () => {
 
         {/* Content */}
         <motion.div
-          className="relative z-10 md:w-1/2 space-y-6 ml-10"
+          className="relative z-10 md:w-1/2 space-y-6 text-center md:text-left px-3 md:px-6"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -107,33 +66,20 @@ const Home = () => {
           <p className="text-gray-300 text-lg">
             Welcome to the ultimate Battlegrounds Mobile India (BGMI) tournament hub — where elite squads clash, winners rise, and legends are born.
           </p>
-          <div className="space-x-4">
+          <div className="space-x-4 md:flex justify-center align-middle">
             <Link
               to="/tournament"
-              className="inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-6 py-3 rounded-full shadow-lg transition"
+              className="inline-block border mt-4 bg-amber-600/20 border-yellow-500 text-yellow-500 hover:bg-yellow-600 hover:text-black font-bold px-6 py-3 rounded-full shadow-lg transition"
             >
               Explore Tournaments
             </Link>
             <Link
               to="/register"
-              className="inline-block border border-yellow-500 text-yellow-500 hover:bg-yellow-600 hover:text-black font-bold px-6 py-3 rounded-full shadow-lg transition"
+              className="inline-block border mt-4 border-yellow-500 text-yellow-500 hover:bg-yellow-600 hover:text-black font-bold px-6 py-3 rounded-full shadow-lg transition"
             >
               Register Now
             </Link>
           </div>
-        </motion.div>
-
-        <motion.div
-          className="relative z-10 md:w-1/2 mt-10 md:mt-0"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          {/* <img
-      src={Bgimage}
-      alt="BGMI Tournament"
-      className="rounded-2xl shadow-2xl"
-    /> */}
         </motion.div>
       </section>
 

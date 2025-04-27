@@ -9,6 +9,7 @@ import { GiLaurelsTrophy } from "react-icons/gi";
 export default function AdminTournamentPanel() {
   const [tournaments, setTournaments] = useState([]);
   const [error, setError] = useState("");
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     fetchTournaments();
@@ -16,7 +17,7 @@ export default function AdminTournamentPanel() {
 
   const fetchTournaments = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/admin/tournaments");
+      const response = await axios.get("http://192.168.0.106:3000/admin/tournaments");
       setTournaments(response.data);
     } catch (error) {
       setError("Error fetching tournaments");
@@ -26,7 +27,7 @@ export default function AdminTournamentPanel() {
   const deleteTournament = async (id) => {
     if (window.confirm("Are you sure you want to delete this tournament?")) {
       try {
-        await axios.delete(`http://localhost:3000/admin/tournament/${id}`);
+        await axios.delete(`http://192.168.0.106:3000/admin/tournament/${id}`);
         setTournaments((prev) => prev.filter((t) => t._id !== id));
       } catch (error) {
         alert("Error deleting tournament");
@@ -77,20 +78,21 @@ export default function AdminTournamentPanel() {
                 <GiLaurelsTrophy className="text-yellow-400" />
                 <span className="text-gray-300">Game Mode: {t.gameMode}</span>
               </div>
-              <div className="text-sm flex items-center gap-2 mb-1">
+              {/* <div className="text-sm flex items-center gap-2 mb-1">
                 <MdDateRange className="text-pink-400" />
                 <span className="text-gray-300">Date: {t.date?.split("T")[0]}</span>
               </div>
               <div className="text-sm flex items-center gap-2 mb-1">
                 <MdSchedule className="text-blue-400" />
                 <span className="text-gray-300">Time: {t.date?.split("T")[1]?.slice(0, 5)}</span>
-              </div>
+              </div> */}
               <div className="text-sm flex items-center gap-2 mb-3">
                 <MdConfirmationNumber className="text-green-400" />
                 <span className="text-gray-300">Slots: {t.slot}</span>
               </div>
 
               <div className="border-t border-white/10 pt-4 flex justify-between text-sm font-medium">
+                {/* Edit Link */}
                 <Link
                   to={`/admin/edit/${t._id}`}
                   className="flex items-center gap-1 text-blue-400 hover:text-blue-500 transition-all"
@@ -98,6 +100,8 @@ export default function AdminTournamentPanel() {
                 >
                   <FaEdit /> Edit
                 </Link>
+
+                {/* Delete Button */}
                 <button
                   onClick={() => deleteTournament(t._id)}
                   className="flex items-center gap-1 text-red-400 hover:text-red-500 transition-all"
@@ -105,12 +109,23 @@ export default function AdminTournamentPanel() {
                 >
                   <FaTrash /> Delete
                 </button>
+
+                {/* Teams Link */}
                 <Link
                   to={`/admin/edit/teams/${t._id}`}
                   className="flex items-center gap-1 text-green-400 hover:text-green-500 transition-all"
                   title="View Teams"
                 >
                   <FaUsers /> Teams
+                </Link>
+
+                {/* Send Email Link */}
+                <Link
+                  to={`/admin/email/sends/${t._id}`}
+                  className="flex items-center gap-1 text-yellow-400 hover:text-yellow-500 transition-all"
+                  title="Send Email"
+                >
+                  <FaEdit /> Send Email
                 </Link>
               </div>
             </motion.div>

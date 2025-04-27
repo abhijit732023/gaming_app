@@ -7,12 +7,31 @@ import BgImage from "../images/money2.jpg"; // Add your background image path
 export default function PayNow() {
   const [payment, setPaymentState] = useState(false);
   const [countdown, setCountdown] = useState(5); // Countdown state
-  const { team_id, id, amount } = useParams();
+  const { team_id, id, amount, userId } = useParams();
   const navigate = useNavigate(); // Initialize navigate function
+
+  useEffect(() => {
+    if (payment) {
+      const countdownInterval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(countdownInterval);
+            // Use a timeout to ensure navigation happens after rendering
+            setTimeout(() => {
+              navigate(`/mytournament/${userId}`); // Navigate after countdown
+            }, 0);
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(countdownInterval); // Cleanup interval on unmount
+    }
+  }, [payment, navigate, userId]);
 
   const handlePayment = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/payment/request", {
+      const response = await axios.post("http://192.168.0.106:3000/payment/request", {
         amount: amount,
       });
 
@@ -28,24 +47,13 @@ export default function PayNow() {
         handler: async function (response) {
           console.log("Payment Response:", response);
           try {
-            await axios.post("http://localhost:3000/payment/verify", {
+            await axios.post("http://192.168.0.106:3000/payment/verify", {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
               razorpay_signature: response.razorpay_signature,
               teamId: team_id,
             });
-            setPaymentState(true);
-
-            // Start countdown before navigating
-            const countdownInterval = setInterval(() => {
-              setCountdown((prev) => {
-                if (prev === 1) {
-                  clearInterval(countdownInterval);
-                  navigate(`/tournament/tournament_id/${id}`); // Navigate after countdown
-                }
-                return prev - 1;
-              });
-            }, 1000);
+            setPaymentState(true); // Set payment state to true
           } catch (error) {
             console.error("Verification error:", error.response?.data || error.message);
             alert("Payment verification failed. Please try again.");

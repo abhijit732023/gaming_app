@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
+import {Email_sendPage,Mytournament,TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
 import { AuthProvider } from '../ContextApi/contextapi.jsx';
 import './index.css'; // Import Tailwind CSS
 
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: '/payment/:id/:team_id/:amount',
+    path: '/payment/:id/:userid/:team_id/:amount',
     element: (
       <AuthGuard> {/* Ensure only logged-in users can access logout */}
         <PayNow />
@@ -116,6 +116,22 @@ const router = createBrowserRouter([
     element: (
       <AuthGuard> {/* Ensure only logged-in users can access logout */}
         < TournamentDetail/>
+      </AuthGuard>
+    )
+  },
+  {
+    path: 'mytournament/:userid',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        < Mytournament/>
+      </AuthGuard>
+    )
+  },
+  {
+    path: 'admin/email/sends/:tournamentid',
+    element: (
+      <AuthGuard> {/* Ensure only logged-in users can access logout */}
+        < Email_sendPage/>
       </AuthGuard>
     )
   }

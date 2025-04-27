@@ -25,7 +25,7 @@ export default function EditTournament() {
 
   const fetchTournament = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/admin/tournament/${id}`);
+      const response = await axios.get(`http://192.168.0.106:3000/admin/tournament/${id}`);
       const data = response.data.tournament;
       console.log("Fetched tournament data:", data); // Log the fetched data
 
@@ -40,11 +40,11 @@ export default function EditTournament() {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.put(`http://localhost:3000/admin/tournament/${id}`, formData);
+      await axios.put(`http://192.168.0.106:3000/admin/tournament/${id}`, formData);
       setSuccessMessage("Tournament updated successfully!");
       setTimeout(() => {
         setSuccessMessage(""); // Clear success message after 3 seconds
-        navigate("/admin/tournaments"); // Redirect to tournaments page
+        navigate("/admin/edit"); // Redirect to tournaments page
       }, 3000);
     } catch (error) {
       console.error("Error updating tournament:", error);

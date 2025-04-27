@@ -17,7 +17,7 @@ export default function UnpaidTeams() {
 
   const fetchTeams = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/team/teamss/${id}`);
+      const response = await axios.get(`http://192.168.0.106:3000/team/teamss/${id}`);
       const unpaidTeams = response.data.teams.filter((team) => team.paymentStatus === "pending");
       setTeams(unpaidTeams);
       setLoading(false);
@@ -31,7 +31,7 @@ export default function UnpaidTeams() {
     const confirmDelete = window.confirm("Are you sure you want to delete this unpaid team?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:3000/team/delete/${teamId}`);
+        await axios.delete(`http://192.168.0.106:3000/team/delete/${teamId}`);
         setTeams(teams.filter((team) => team._id !== teamId));
       } catch (error) {
         setError("Error deleting team.");

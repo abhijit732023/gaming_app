@@ -3,7 +3,7 @@ import { useAuth } from "../../../ContextApi/contextapi";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import BgImage from "../images/pubg-playerunknowns-battlegrounds-2020-games-5k-8k-8192x3510-218.jpg";
-import Header from "../../components/header"; // Import the Header component
+import { Header, MobileMenu } from "../../FilesPaths/allpath"; // Import the Header and MobileMenu components
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -29,8 +29,15 @@ const Profile = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Header */}
-      <Header />
+      {/* Header for larger screens */}
+      <div className="hidden md:block">
+        <Header />
+      </div>
+
+      {/* Mobile Menu for smaller screens */}
+      <div className="absolute ">
+        <MobileMenu />
+      </div>
 
       {/* Black Overlay */}
       <div className="absolute inset-0 bg-black opacity-70"></div>
@@ -43,7 +50,7 @@ const Profile = () => {
         transition={{ duration: 0.6 }}
       >
         <motion.div
-          className="backdrop-blur-xl bg-black/30 border border-white/20 p-8 rounded-xl shadow-2xl w-full max-w-md text-center"
+          className="backdrop-blur-xl bg-black/30 border border-white/20 p-8 rounded-xl shadow-2xl w-full max-w-md text-center mt-15"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
@@ -76,7 +83,7 @@ const Profile = () => {
 
         {/* Tournament Details Section */}
         <motion.div
-          className="mt-8 w-full bg-white/10 rounded-xl p-6 text-white text-center backdrop-blur-md shadow-md max-w-md"
+          className="mt-8 w-full bg-white/10 rounded-xl p-2 text-white text-center backdrop-blur-md shadow-md max-w-md"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}

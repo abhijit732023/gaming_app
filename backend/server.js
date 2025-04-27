@@ -2,13 +2,20 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import {Slot_regi_router, Admin_fullcontrol_route,PaymentRouter,Auth_Middleware,Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
+import {AdminEmailSend,Slot_regi_router, Admin_fullcontrol_route,PaymentRouter,Auth_Middleware,Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
 
 const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: "http://localhost:5173", // Your frontend URL
+  origin: function (origin, callback) {
+    const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.106:5173' ];
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // Block the request
+    }
+  },
   credentials: true // Allow cookies
 }));
 
@@ -27,6 +34,7 @@ app.use('/mainpage', Main_tournament); // Ensure this is exported correctly
 app.use('/payment', PaymentRouter); // Ensure this is exported correctly
 app.use('/admin', Admin_fullcontrol_route); // Ensure this is exported correctly
 app.use('/team',Slot_regi_router ); // Ensure this is exported correctly
+app.use('/email',AdminEmailSend ); // Ensure this is exported correctly
 
 // Handle unmatched routes
 app.use((req, res) => {
@@ -43,4 +51,4 @@ mongoose.connect(config.mongoURL, {
 
 // Start server
 const PORT = config.port || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on http://192.168.0.106:${PORT}`));

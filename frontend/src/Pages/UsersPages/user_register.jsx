@@ -26,7 +26,7 @@ export default function UserRegister() {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post("http://localhost:3000/register", data);
+        const response = await axios.post("http://192.168.0.106:3000/register", data);
         console.log("User registered:", response.data);
         setMessage("User registered successfully!");
         setIsRegistered(true); // Set registration status to true
@@ -73,8 +73,8 @@ export default function UserRegister() {
       )}
 
       {/* Attracting Text */}
-      <div className="absolute top-10 text-center">
-        <h1 className="text-4xl font-extrabold text-yellow-500 drop-shadow-lg">
+      <div className="absolute top-10 text-center px-4 md:px-0">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-500 drop-shadow-lg">
           Gear up. Squad up. Sign up.
         </h1>
         <p className="text-gray-300 text-lg mt-2">
@@ -83,7 +83,7 @@ export default function UserRegister() {
       </div>
 
       {/* Form Container */}
-      <div className="relative z-10 w-full max-w-md bg-black/30 backdrop-blur-md text-white p-6 rounded-lg shadow-lg">
+      <div className="relative z-10 w-full max-w-md bg-black/30 backdrop-blur-md text-white p-6 rounded-lg shadow-lg mx-4 md:mx-0">
         {isRegistered ? (
           <div className="text-center">
             <h2 className="text-2xl font-bold text-green-500 mb-4">🎉 Congratulations!</h2>
@@ -137,7 +137,13 @@ export default function UserRegister() {
                 <input
                   id="password"
                   type="password"
-                  {...register("password", { required: "Password is required" })}
+                  {...register("password", { required: "Password is required" ,
+                    pattern: {
+                      value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                        "Password must be at least 8 characters long, include at least one uppercase letter, one number, and one special character",
+                    },
+                  })}
                   className="w-full p-2 border-b border-amber-500 rounded text-white bg-transparent focus:outline-none focus:ring-0 peer"
                 />
                 <label

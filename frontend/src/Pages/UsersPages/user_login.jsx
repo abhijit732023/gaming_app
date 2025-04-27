@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useAuth } from "../../../ContextApi/contextapi";
 import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../images/pubg-level-3-helmet-3840x2160-864.jpg"; // Adjust the path as needed
-import { Leapfrog } from 'ldrs/react'
-import 'ldrs/react/Leapfrog.css' // Register the loader
+import { Leapfrog } from "ldrs/react";
+import {Loading} from "../../FilesPaths/allpath.js"; // Import the loading animation component
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,17 +19,17 @@ const Login = () => {
     console.log("Submitting data:", data.email);
 
     try {
-      const response = await axios.post("http://localhost:3000/login", data, {
-        withCredentials: true // Include credentials (cookies) in the request to successfully create cookies 
+      const response = await axios.post("http://192.168.0.106:3000/login", data, {
+        withCredentials: true, // Include credentials (cookies) in the request to successfully create cookies
       });
       setSuccessMessage(response.data.message);
       login(response.data.user);
-      console.log('heyy', user);
+      console.log("heyy", user);
       setErrorMessage("");
       if (login) {
         setIsLoading(true); // Show loader
         setTimeout(() => {
-          navigate('/profile');
+          navigate("/profile");
         }, 3000);
       }
     } catch (error) {
@@ -40,47 +40,48 @@ const Login = () => {
 
   return (
     <div
-    className="relative bg-black flex justify-center items-center h-screen text-white"
-    style={{
-      backgroundImage: `url(${bgImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      opacity: 1,
-    }}
-  >
-    {/* Black Overlay */}
-    <div className="absolute inset-0 bg-black opacity-50"></div>
-
-    {/* Attracting Text */}
-    <div className="absolute top-10 text-center">
-      <h1 className="text-4xl font-extrabold text-yellow-500 drop-shadow-lg">
-        Welcome back, warrior. The battleground awaits.
-      </h1>
-      <p className="text-gray-300 text-lg mt-2">
-        Log in to join the action and lead your squad to victory!
-      </p>
-    </div>
-
-    {/* Loader */}
-    {isLoading && (
-      <div className="absolute inset-0 flex justify-center items-center z-20">
-        <Leapfrog size="80" speed="2" color="#B9F0DA"></Leapfrog>
-      </div>
-    )}
-
-    {/* Login Form */}
-    <div
-      className={`relative bg-transparent backdrop-blur-3xl p-6 rounded-lg shadow-lg w-96 z-10 ${
-        isLoading ? "opacity-50" : ""
-      }`}
+      className="relative overflow-hidden bg-black flex justify-center items-center min-h-screen text-white"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        opacity: 1,
+      }}
     >
-      <h2 className="text-2xl text-white font-bold mb-4 text-center">Login</h2>
-      {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
-      {successMessage && <p className="text-green-500 text-sm mb-2">{successMessage}</p>}
+      {/* Black Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
 
+      {/* Attracting Text */}
+      <div className="absolute top-10 text-center px-4 md:px-0">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-yellow-500 drop-shadow-lg">
+          Welcome back, warrior. The battleground awaits.
+        </h1>
+        <p className="text-gray-300 text-sm md:text-lg mt-2">
+          Log in to join the action and lead your squad to victory!
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      {/* Loader */}
+      {isLoading && (
+        <div className="absolute inset-0 flex justify-center items-center z-20">
+          <Loading size="80" speed="2" color="#B9F0DA"></Loading>
+        </div>
+      )}
+
+      {/* Login Form */}
+      <div
+        className={`relative bg-black/30 backdrop-blur-md p-6 rounded-lg shadow-lg w-full max-w-md mx-4 md:mx-0 z-10 ${
+          isLoading ? "opacity-50" : ""
+        }`}
+      >
+        <h2 className="text-2xl md:text-3xl text-white font-bold mb-4 text-center">
+          Login
+        </h2>
+        {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
+        {successMessage && <p className="text-green-500 text-sm mb-2">{successMessage}</p>}
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Email Field */}
           <div className="relative">
             <input
@@ -116,10 +117,9 @@ const Login = () => {
           </div>
 
           {/* Submit Button */}
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition duration-200"
+            className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 rounded transition duration-200 lg:mt-15"
           >
             Login
           </button>
@@ -127,7 +127,7 @@ const Login = () => {
           {/* Register Link */}
           <p className="text-center text-sm text-gray-400 mt-4">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link to="/register" className="text-yellow-500 hover:underline">
               Register
             </Link>
           </p>

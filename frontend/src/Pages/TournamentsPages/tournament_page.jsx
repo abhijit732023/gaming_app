@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { Container, Loading } from "./../../FilesPaths/allpath.js"; // Import Loading component
+import { useNavigate } from "react-router-dom";
+import { Container, Loading, MobileMenu, Header } from "./../../FilesPaths/allpath.js"; // Import MobileMenu and Header components
 import { motion } from "framer-motion";
 import BgImage from "../images/bg.jpg"; // Add background image
-import MRmage from "../images/miramar.png"; // Add background image
-import ERmage from "../images/erangle.png"; // Add background image
-import SHImage from "../images/shanok.png"; // Add background image
-import Joinus from "../images/joinus.png"; // Add background image
+import MRmage from "../images/miramar.png"; // Add Miramar image
+import ERmage from "../images/erangle.png"; // Add Erangle image
+import SHImage from "../images/shanok.png"; // Add Shanok image
+import Joinus from "../images/joinus.png"; // Add Join Us image
 
 export default function TournamentPage() {
   const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ export default function TournamentPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/mainpage", {
+        const response = await axios.get("http://192.168.0.106:3000/mainpage", {
           withCredentials: true,
         });
 
@@ -63,11 +63,19 @@ export default function TournamentPage() {
           backgroundRepeat: "no-repeat", // Prevent the image from repeating
         }}
       >
+        {/* Conditional Rendering for Header and MobileMenu */}
+        <div className="block md:hidden">
+          <MobileMenu /> {/* Show MobileMenu for small screens */}
+        </div>
+        <div className="hidden md:block">
+          <Header /> {/* Show Header for medium and larger screens */}
+        </div>
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-black opacity-80"></div>
 
         <motion.h1
-          className="text-white text-3xl mb-6 text-center relative z-10"
+          className="text-yellow-400 text-3xl md:text-4xl mb-6 text-center relative z-10 px-4 font-extrabold max-sm:pt-5  pt-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -76,13 +84,13 @@ export default function TournamentPage() {
         </motion.h1>
 
         {error && (
-          <p className="text-red-500 relative z-10">
+          <p className="text-red-500 relative z-10 text-center px-4">
             Error fetching data: {error.message}
           </p>
         )}
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ml-6 gap-6 relative z-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 px-4 pb-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, staggerChildren: 0.2, delay: 2 }} // Added delay to start after the main container animation
@@ -91,14 +99,14 @@ export default function TournamentPage() {
             data.map((tournament) => (
               <motion.div
                 key={tournament._id}
-                className="relative bg-gray-800 p-4 md:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-110 overflow-hidden"
+                className="relative bg-gray-800 p-4 md:p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105 overflow-hidden"
                 style={{ width: "100%", maxWidth: "450px", height: "235px" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
               >
                 {/* Background Image */}
-                <div className="absolute inset-0 w-full bg-cover h-full z-0">
+                <div className="absolute inset-0 w-full bg-cover h-full z-0 max-sm:bg-cover max-sm:top-0">
                   <img
                     src={
                       tournament.roomType.toLowerCase() === "erangle"
@@ -109,6 +117,8 @@ export default function TournamentPage() {
                         ? `${SHImage}`
                         : `${BgImage}`
                     }
+                    alt={tournament.roomType}
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
@@ -118,19 +128,19 @@ export default function TournamentPage() {
                 {/* Join Link */}
                 <button
                   onClick={() => handleJoinClick(`/tournament/detail/${tournament._id}`)}
-                  className="absolute bottom-2 right-2 md:bottom-6 md:right-8 z-20 transform hover:scale-125 transition duration-300"
+                  className="absolute bottom-2 right-2 md:bottom-6 md:right-8 z-20 transform transition duration-300"
                 >
                   <img
                     src={Joinus}
                     alt="Join Us"
-                    className="w-16 md:w-24 hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.9)]"
+                    className="w-16 max-sm:w-30 md:w-24 blend"
                   />
                 </button>
               </motion.div>
             ))
           ) : (
             <motion.p
-              className="text-white text-center"
+              className="text-white text-center px-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}

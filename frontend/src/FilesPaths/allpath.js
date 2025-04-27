@@ -21,7 +21,9 @@ import Home from "../Pages/UsersPages/home";
 import Loading from "../components/loading";
 import TournamentDetail from "../Pages/TournamentsPages/tournament_detail";
 import Header from "../components/header";
-
+import MobileMenu from "../components/mobile_menu";
+import Mytournament from "../Pages/UsersPages/mytournament";
+import Email_sendPage from "../Pages/AdminPages/email_send";
 
  export {
     EditTournament,
@@ -48,5 +50,8 @@ import Header from "../components/header";
     Loading,
     TournamentDetail,
     Header,
+    MobileMenu,
+    Mytournament,
+    Email_sendPage,
 }
 

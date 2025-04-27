@@ -16,7 +16,7 @@ export default function ShowTeams() {
 
   const fetchTeams = async () => {
     try {
-      await axios.get(`http://localhost:3000/team/teamss/${id}`);
+      await axios.get(`http://192.168.0.106:3000/team/teamss/${id}`);
       setLoading(false);
     } catch (error) {
       setError("Error fetching team registrations.");

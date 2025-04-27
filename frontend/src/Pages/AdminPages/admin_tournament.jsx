@@ -20,7 +20,7 @@ export default function RoomForm() {
   const onSubmit = async (data) => {
     const dateTime = new Date(`${data.date} ${data.time}`);
     try {
-      const response = await axios.post("http://localhost:3000/admin/create", {
+      const response = await axios.post("http://192.168.0.106:3000/admin/create", {
         ...data,
         dateTime,
       });

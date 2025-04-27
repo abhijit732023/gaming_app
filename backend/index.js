@@ -13,7 +13,7 @@ import PaymentRouter from "./routes/User_route/slot_payment_route.js";
 import Admin_fullcontrol_route from "./routes/Admin_route/adminRoutes.js";
 import Slot_regi from './models/Tournament/slot_register.js';
 import Slot_regi_router from "./routes/Tournament_route/team_register.js";
-
+import AdminEmailSend from "./routes/Admin_route/admin_email_send.js";
 
 export {
     Slot_regi_router,
@@ -30,7 +30,8 @@ export {
     CreateRoom,
     LogoutRouter,
     Main_tournament,
-    Auth_Middleware
+    Auth_Middleware,
+    AdminEmailSend,
 
 
 }
