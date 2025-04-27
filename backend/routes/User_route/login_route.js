@@ -34,9 +34,10 @@ LoginRouter.post("/", async (req, res) => {
     // Set a cookie with the token
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // Set to true if using HTTPS
-      sameSite: 'Lax' // Adjust as needed
-    }); 
+      secure: true,  // Ensure cookie is only sent over HTTPS in production
+      sameSite: 'Lax'  // Adjust as needed
+    });
+    
 
     res.status(200).json({ message: "Login successful", user }); 
   } catch (error) { 

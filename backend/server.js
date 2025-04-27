@@ -9,14 +9,20 @@ const app = express();
 // CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.106:5173','https://gaming-app-six.vercel.app' ];
+    const allowedOrigins = [
+      'http://localhost:5173', // Local development environment
+      'http://192.168.0.106:5173', // Local network IP (for testing in local network)
+      'https://gaming-app-six.vercel.app', // Production domain (frontend)
+    ];
+    
+    // Check if the origin is in the allowed list
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true); // Allow the request
     } else {
       callback(new Error('Not allowed by CORS')); // Block the request
     }
   },
-  credentials: true // Allow cookies
+  credentials: true, // Allow cookies to be sent with the request
 }));
 
 app.use(express.json());
