@@ -43,7 +43,7 @@ export default function PayNow() {
       const orderData = response.data;
 
       const options = {
-        key: "rzp_test_9VUq51KNsL5zm8",
+        key: `${ENV_File.razor_key_id}`, // Replace with your Razorpay key ID
         amount: orderData.amount,
         currency: "INR",
         name: "Tournament Entry",
