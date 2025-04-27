@@ -52,3 +52,4 @@ mongoose.connect(config.mongoURL, {
 // Start server
 const PORT = config.port || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://192.168.0.106:${PORT}`));
+// railway link -p e8473d40-0a8a-4cdd-a73a-fb0b05924c77
