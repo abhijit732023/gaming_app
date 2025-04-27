@@ -9,7 +9,7 @@ const app = express();
 // CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.106:5173','https://gaming-app-yqvt.vercel.app/' ];
+    const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.106:5173','https://gaming-app-six.vercel.app/' ];
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true); // Allow the request
     } else {
