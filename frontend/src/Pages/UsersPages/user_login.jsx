@@ -5,11 +5,11 @@ import { useAuth } from "../../../ContextApi/contextapi";
 import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../images/login.webp"; // Adjust the path as needed
 import { Leapfrog } from "ldrs/react";
-import {Loading,ENV_File} from "../../FilesPaths/allpath.js"; // Import the loading animation component
+import { Loading, ENV_File, Header, MobileMenu } from "../../FilesPaths/allpath.js"; // Import the header and mobile menu components
 
 const Login = () => {
   console.log(ENV_File.backendURL);
-  
+
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -54,8 +54,18 @@ const Login = () => {
       {/* Black Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
+      {/* Header for Desktop */}
+      <div className="hidden md:block absolute top-0 left-0 w-full z-20">
+        <Header />
+      </div>
+
+      {/* Mobile Menu */}
+      <div className="block md:hidden absolute top-0 left-0 w-full z-20">
+        <MobileMenu />
+      </div>
+
       {/* Attracting Text */}
-      <div className="absolute top-10 text-center px-4 md:px-0">
+      <div className="absolute top-20 text-center px-4 md:px-0">
         <h1 className="text-3xl md:text-4xl font-extrabold text-yellow-500 drop-shadow-lg">
           Welcome back, warrior. The battleground awaits.
         </h1>
@@ -73,7 +83,7 @@ const Login = () => {
 
       {/* Login Form */}
       <div
-        className={`relative bg-black/30 backdrop-blur-md p-6 rounded-lg shadow-lg w-full max-w-md mx-4 md:mx-0 z-10 ${
+        className={`relative bg-black/20 border-2 border-yellow-500/30  backdrop-blur-md p-6 rounded-md rounded-b-[50px] shadow-lg w-full max-w-md mx-4 md:mx-0 z-10 ${
           isLoading ? "opacity-50" : ""
         }`}
       >
@@ -98,7 +108,7 @@ const Login = () => {
             >
               Email
             </label>
-            {errors.email && <p className="text-red-400 text-sm">{errors.email.message}</p>}
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
 
           {/* Password Field */}
@@ -106,7 +116,9 @@ const Login = () => {
             <input
               id="password"
               type="password"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", {
+                required: "Password is required",
+              })}
               className="w-full p-2 border-b border-amber-500 rounded text-white bg-transparent focus:outline-none focus:ring-0 peer"
             />
             <label
@@ -115,7 +127,7 @@ const Login = () => {
             >
               Password
             </label>
-            {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
           </div>
 
           {/* Submit Button */}

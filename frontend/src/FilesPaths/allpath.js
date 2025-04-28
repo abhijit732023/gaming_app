@@ -25,6 +25,8 @@ import MobileMenu from "../components/mobile_menu";
 import Mytournament from "../Pages/UsersPages/mytournament";
 import Email_sendPage from "../Pages/AdminPages/email_send";
 import ENV_File from "../../config/config";
+import RGBLight from "../components/register_success"; 
+
  export {
     EditTournament,
     AdminTournamentPanel,
@@ -54,5 +56,6 @@ import ENV_File from "../../config/config";
     Mytournament,
     Email_sendPage,
     ENV_File,
+    RGBLight,
 }
 

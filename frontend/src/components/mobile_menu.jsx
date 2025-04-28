@@ -1,38 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaHome, FaTrophy, FaUserCircle, FaSignOutAlt, FaBars, FaTimes, FaClipboardList } from "react-icons/fa"; // Added FaClipboardList for "My Tournaments"
+import {
+  FaHome,
+  FaTrophy,
+  FaUserCircle,
+  FaSignOutAlt,
+  FaClipboardList,
+  FaSignInAlt,
+  FaUserPlus,
+} from "react-icons/fa";
 import { useAuth, Loading } from "../FilesPaths/allpath.js";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MobileMenu = () => {
-  const { user, logout } = useAuth(); // Import user and logout from context
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // State to control loader visibility
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const userId = user?._id; // Save user._id in userId variable
+  const userId = user?._id;
 
-  // Handle navigation
   const navigateTo = (path) => {
-    setIsLoading(true); // Show loader
+    setIsLoading(true);
     setTimeout(() => {
       navigate(path);
-      setIsLoading(false); // Hide loader after 1.5 seconds
-      setIsMenuOpen(false); // Close the menu after navigation
-    }, 1500);
+      setIsLoading(false);
+      setIsMenuOpen(false);
+    }, 1200);
   };
 
-  // Handle logout
   const handleLogout = async () => {
-    setIsLoading(true); // Show loader
+    setIsLoading(true);
     try {
-      await logout(); // Call the Logout function
+      await logout();
       setTimeout(() => {
-        navigate("/login"); // Redirect to the login page after logout
-        setIsLoading(false); // Hide loader after 1.5 seconds
-      }, 1500);
+        navigate("/login");
+        setIsLoading(false);
+      }, 1200);
     } catch (error) {
       console.error("Logout failed:", error);
-      setIsLoading(false); // Hide loader in case of an error
+      setIsLoading(false);
     }
   };
 
@@ -40,100 +47,139 @@ const MobileMenu = () => {
     <div className="relative">
       {/* Loader */}
       {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-60">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-[70]">
           <Loading size="80" speed="2" color="#FACC15" />
         </div>
       )}
 
-      {/* Menu Icon */}
-      <div className="absolute top-4 left-4 z-40">
-        <button
+      {/* Menu Toggle Button */}
+      <div className="fixed bottom-6 right-6 z-[60]">
+        <motion.button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-yellow-500 p-2 rounded-md"
+          className="bg-yellow-400 p-4 rounded-full shadow-lg"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
-          {isMenuOpen ? (
-            <FaTimes className="w-6 h-6" />
-          ) : (
-            <FaBars className="w-6 h-6" />
-          )}
-        </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-7 w-7 text-black"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+            />
+          </svg>
+        </motion.button>
       </div>
 
-      {/* Sidebar */}
-      <div
-        className={`transform transition-all ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed inset-0 bg-black/90 text-white z-50 shadow-lg w-64`}
-      >
-        <header className="bg-gradient-to-r from-yellow-500 to-red-500 flex items-center py-6 px-4">
-          <FaUserCircle className="text-white text-4xl" />
-          <div className="ml-4">
-            <h1 className="text-white text-lg font-bold">Welcome, {user?.name || "User"}</h1>
-            <p className="text-gray-300 text-sm">Gaming Enthusiast</p>
-          </div>
-        </header>
+      {/* AnimatePresence for menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black z-[50]"
+              onClick={() => setIsMenuOpen(false)}
+            />
 
-        <ul className="px-4 py-6 space-y-4">
-          <li
-            className="flex items-center gap-4 text-white text-md py-2 cursor-pointer hover:text-yellow-500"
-            onClick={() => navigateTo("/")}
-          >
-            <FaHome />
-            Home
-          </li>
-          <li
-            className="flex items-center gap-4 text-white text-md py-2 cursor-pointer hover:text-yellow-500"
-            onClick={() => navigateTo("/tournament")}
-          >
-            <FaTrophy />
-            Tournaments
-          </li>
-          <li
-            className="flex items-center gap-4 text-white text-md py-2 cursor-pointer hover:text-yellow-500"
-            onClick={() => navigateTo("/profile")}
-          >
-            <FaUserCircle />
-            Profile
-          </li>
-          <li
-            className="flex items-center gap-4 text-white text-md py-2 cursor-pointer hover:text-yellow-500"
-            onClick={() => navigateTo(`/mytournament/${userId}`)} // Navigate to My Tournaments using userId variable
-          >
-            <FaClipboardList />
-            My Tournaments
-          </li>
-          <li
-            className="flex items-center gap-4 text-white text-md py-2 cursor-pointer hover:text-red-500"
-            onClick={() => {
-              setIsMenuOpen(false);
-              handleLogout(); // Call the handleLogout function
-            }}
-          >
-            <FaSignOutAlt />
-            Logout
-          </li>
-        </ul>
+            {/* Bottom Drawer Menu */}
+            <motion.div
+              key="drawer"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="fixed bottom-0 left-0 right-0 bg-white/20 backdrop-blur-md rounded-t-3xl p-8 z-[55] shadow-2xl"
+            >
+              <div className="flex flex-col space-y-6 text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <MenuItem icon={<FaHome />} label="Home" onClick={() => navigateTo("/")} />
+                </motion.div>
+                
+                {user ? (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <MenuItem icon={<FaTrophy />} label="Tournaments" onClick={() => navigateTo("/tournament")} />
+                    </motion.div>
 
-        {/* Close Icon at the Bottom */}
-        <div className="flex justify-center py-4 border-t border-gray-700">
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="text-yellow-500 hover:text-red-500 transition"
-          >
-            <FaTimes className="w-6 h-6" />
-          </button>
-        </div>
-      </div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <MenuItem icon={<FaUserCircle />} label="Profile" onClick={() => navigateTo("/profile")} />
+                    </motion.div>
 
-      {/* Overlay to close the menu */}
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40"
-          onClick={() => setIsMenuOpen(false)}
-        ></div>
-      )}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <MenuItem icon={<FaClipboardList />} label="My Tournaments" onClick={() => navigateTo(`/mytournament/${userId}`)} />
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <MenuItem icon={<FaSignOutAlt />} label="Logout" onClick={handleLogout} color="text-red-400" />
+                    </motion.div>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <MenuItem icon={<FaSignInAlt />} label="Login" onClick={() => navigateTo("/login")} />
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <MenuItem icon={<FaUserPlus />} label="Signup" onClick={() => navigateTo("/register")} />
+                    </motion.div>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
+const MenuItem = ({ icon, label, onClick, color = "text-white" }) => (
+  <div
+    className={`flex items-center justify-center gap-3 text-lg font-semibold ${color} cursor-pointer`}
+    onClick={onClick}
+  >
+    {icon}
+    {label}
+  </div>
+);
 
 export default MobileMenu;
