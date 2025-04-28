@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../ContextApi/contextapi";
 import BgImage from "../images/register.webp"; // Add your background image path
@@ -8,9 +8,11 @@ import { Loading, ENV_File, RGBLight, Header, MobileMenu } from "../../FilesPath
 import { motion } from "framer-motion"; // New Import for animation
 
 export default function UserRegister() {
+  const { user } = useAuth();
   const [message, setMessage] = useState("");
   const [isRegistered, setIsRegistered] = useState(false); // Track registration status
   const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [errorMessage, setErrorMessage] = useState(""); // Error message for logged-in users
   const [showLoading, setShowLoading] = useState(false); // Track Loading component visibility
   const {
     register,
@@ -18,9 +20,24 @@ export default function UserRegister() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const { login } = useAuth();
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      setErrorMessage("You are already logged in. Please logout first to access the registration page.");
+      setTimeout(() => {
+        navigate("/profile"); // Redirect to the profile page or another appropriate page
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   const onSubmit = async (data) => {
+    if (user) {
+      // Show error if the user is already logged in
+      setErrorMessage("You are already logged in. Please logout first to access the registration page.");
+      return;
+    }
+
     console.log("Submitting data:", data);
     setShowLoading(true);
     setIsLoading(true);
@@ -55,51 +72,6 @@ export default function UserRegister() {
     }, 2000);
   };
 
-  // ⚡ Welcome Animation component
-  const WelcomeAnimation = ({ username }) => {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black z-50 overflow-hidden">
-        {/* Flash Effect */}
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute inset-0 bg-white"
-        />
-
-        {/* Welcome Text */}
-        <RGBLight />
-
-        {/* Particle effects */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-          {Array.from({ length: 30 }).map((_, index) => (
-            <motion.div
-              key={index}
-              initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                opacity: 1,
-                scale: 1,
-              }}
-              animate={{
-                y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight - 200],
-                opacity: [1, 0],
-                scale: [1, 0],
-              }}
-              transition={{
-                duration: 2,
-                delay: index * 0.05,
-                repeat: Infinity,
-                repeatType: "loop",
-              }}
-              className="absolute w-2 h-2 bg-yellow-400 rounded-full shadow-lg"
-            />
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div
       className="min-h-screen flex items-center justify-center relative"
@@ -130,23 +102,20 @@ export default function UserRegister() {
         </div>
       )}
 
-      {/* Welcome Animation */}
-      {isRegistered && <WelcomeAnimation />}
-
-      {/* Attracting Text */}
-      {!isRegistered && (
+      {/* Error Message for Logged-In Users */}
+      {errorMessage && (
         <div className="absolute top-20 text-center px-4 md:px-0">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-500 drop-shadow-lg">
-            Gear up. Squad up. Sign up.
+          <h1 className="text-3xl md:text-4xl font-extrabold text-red-500 drop-shadow-lg">
+            {errorMessage}
           </h1>
-          <p className="text-gray-300 text-lg mt-2">
-            Join the ultimate gaming community today!
+          <p className="text-gray-300 text-sm md:text-lg mt-2">
+            Redirecting you to your profile...
           </p>
         </div>
       )}
 
       {/* Form Container */}
-      {!isRegistered && (
+      {!user && !isRegistered && (
         <div className="relative z-10 w-full max-w-md bg-black/10 border-2 border-amber-600/30 backdrop-blur-md text-white p-6 rounded-md rounded-b-[50px] shadow-lg mx-4 md:mx-0">
           <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
 

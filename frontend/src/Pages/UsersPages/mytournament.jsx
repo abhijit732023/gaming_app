@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ENV_File, useAuth } from "../../FilesPaths/allpath";
+import { ENV_File, useAuth, Header, MobileMenu } from "../../FilesPaths/allpath";
 import { useNavigate } from "react-router-dom";
 import BgImage from "../images/form1.webp"; // Add your background image path here
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
@@ -61,9 +61,19 @@ function Mytournament() {
       {/* Black overlay */}
       <div className="absolute inset-0 bg-black opacity-70"></div>
 
+      {/* Header for Desktop */}
+      <div className="hidden md:block absolute top-0 left-0 w-full z-20">
+        <Header />
+      </div>
+
+      {/* Mobile Menu for Mobile View */}
+      <div className="block md:hidden absolute top-4 left-4 z-20">
+        <MobileMenu />
+      </div>
+
       {/* Content */}
       <div className="relative z-10 p-6 max-w-6xl mx-auto" style={{ minHeight: "80vh" }}>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-500 mb-8 text-center">
+        <h1 className="pt-8 text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-500 mb-8 text-center">
           🎮 My Tournaments
         </h1>
 
@@ -72,7 +82,7 @@ function Mytournament() {
             You haven't registered for any tournaments yet. 🚀
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-5 pb-18">
             {tournaments.map((tournament) => (
               <div
                 key={tournament._id}
@@ -120,23 +130,21 @@ function Mytournament() {
                   {tournament.paymentStatus === "pending" && (
                     <button
                       onClick={() =>
-                        navigate(`/payment/${tournament.tournamentId}/${tournament.userId}/${tournament._id}/${tournament.paymentAmount}`)
-                      }
-                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg w-1/2"
+                        navigate(`/payment/${tournament.tournamentId}/${tournament.userId}/${tournament._id}/${tournament.paymentAmount}`)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg w-full"
                     >
                       Pay Now ₹{tournament.paymentAmount}
                     </button>
                   )}
 
-                  <button
+                  {/* <button
                     onClick={() =>
-                      navigate(`/tournament/tournament_id/${tournament.tournamentId}`)
-                    }
+                      navigate(`/tournament/tournament_id/${tournament.tournamentId}`)}
                     className={`bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-2 rounded-lg ${tournament.paymentStatus === "pending" ? "w-1/2" : "w-full"
                       }`}
                   >
                     View Details 🚀
-                  </button>
+                  </button> */}
                 </div>
 
                 <span className="absolute inset-0 bg-blue-700 opacity-10 blur-lg rounded-xl pointer-events-none" />

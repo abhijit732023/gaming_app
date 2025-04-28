@@ -30,16 +30,19 @@ const MobileMenu = () => {
   };
 
   const handleLogout = async () => {
-    setIsLoading(true);
-    try {
-      await logout();
-      setTimeout(() => {
-        navigate("/login");
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      setIsLoading(true);
+      try {
+        await logout();
+        setTimeout(() => {
+          navigate("/login");
+          setIsLoading(false);
+        }, 1200);
+      } catch (error) {
+        console.error("Logout failed:", error);
         setIsLoading(false);
-      }, 1200);
-    } catch (error) {
-      console.error("Logout failed:", error);
-      setIsLoading(false);
+      }
     }
   };
 
@@ -109,7 +112,7 @@ const MobileMenu = () => {
                 >
                   <MenuItem icon={<FaHome />} label="Home" onClick={() => navigateTo("/")} />
                 </motion.div>
-                
+
                 {user ? (
                   <>
                     <motion.div
