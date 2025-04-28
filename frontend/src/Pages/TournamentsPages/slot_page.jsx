@@ -6,7 +6,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import BgImage from "../images/Xsuit.webp";
-import { useAuth,ENV_File } from "../../FilesPaths/allpath";
+import { useAuth, ENV_File, Header, MobileMenu } from "../../FilesPaths/allpath"; // ✅ already imported
 
 const fadeIn = {
   hidden: { opacity: 0, y: 10 },
@@ -42,12 +42,10 @@ const SlotPage = () => {
         const slotRes = await axios.get(`${ENV_File.backendURL}/team/${id}/slots`, { withCredentials: true });
         setTakenSlots(slotRes.data.takenSlots || []);
         console.log("Taken Slots:", slotRes.data.takenSlots);
-        
 
         const response = await axios.get(`${ENV_File.backendURL}/mainpage/${id}`, { withCredentials: true });
         const tournamentData = response.data?.room;
         console.log("Tournament Data:", tournamentData);
-        
 
         if (tournamentData) {
           setTournament(tournamentData);
@@ -64,7 +62,7 @@ const SlotPage = () => {
     };
 
     fetchTournamentDetails();
-  }, [id]);
+  }, [id, user]);
 
   const onSubmit = async (data) => {
     setMessage("");
@@ -79,10 +77,10 @@ const SlotPage = () => {
           email: data.leader.email,
         },
         teammates: data.teammates || [],
-        dateTime: tournament.dateTime, // Add dateTime from tournament details
-        entryFee: tournament.entryFee, // Add entryFee from tournament details
-        gameMode: tournament.gameMode, // Add gameMode from tournament details
-        roomType: tournament.roomType, // Add roomType from tournament details
+        dateTime: tournament.dateTime,
+        entryFee: tournament.entryFee,
+        gameMode: tournament.gameMode,
+        roomType: tournament.roomType,
       };
 
       const response = await axios.post(`${ENV_File.backendURL}/team/register`, requestData, {
@@ -91,7 +89,7 @@ const SlotPage = () => {
 
       const successMessage = response.data.message || "Team Registered Successfully!";
       setMessage(successMessage);
-      alert(successMessage); // ✅ Basic success alert
+      alert(successMessage);
 
       if (response.data.paymentAmount) {
         const amount = response.data.paymentAmount;
@@ -106,7 +104,6 @@ const SlotPage = () => {
         const { errorType, message } = error.response.data;
         errorMsg = message || errorMsg;
 
-        // Set form-specific errors
         switch (errorType) {
           case "TEAM_NAME_EXISTS":
             setError("teamName", { type: "manual", message });
@@ -125,7 +122,7 @@ const SlotPage = () => {
         }
       }
 
-      alert(errorMsg); // ❌ Basic error alert
+      alert(errorMsg);
     }
   };
 
@@ -147,11 +144,25 @@ const SlotPage = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <Link to={-1} className="absolute flex  items-center p-2 text-2xl text-white opacity-100"><p className="text-3xl">⬅</p>Back</Link>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
+      {/* Header & Mobile Menu */}
+      <div className="block md:hidden">
+        <MobileMenu /> {/* Show MobileMenu for small screens */}
+      </div>
+      <div className="hidden md:block">
+        <Header /> {/* Show Header for medium and larger screens */}
+      </div>
+
+      {/* Back Button */}
+      <Link to={-1} className="absolute flex items-center p-2 text-2xl text-white opacity-100 z-30 top-2 left-2">
+        <p className="text-3xl">⬅</p>Back
+      </Link>
+
+      {/* Main Content */}
       <motion.div
-        className="relative z-10 max-w-4xl mx-auto p-6 bg-black/30 backdrop-blur-2xl text-white rounded-lg shadow-lg mt-20"
+        className="relative z-10 max-w-4xl mx-auto p-6 bg-black/30 backdrop-blur-2xl text-white rounded-lg shadow-lg mt-24"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -165,7 +176,12 @@ const SlotPage = () => {
           🔥 Enter the Arena – Register Your Squad Now!
         </motion.h1>
 
-        <motion.h2 className="text-2xl font-bold mb-6 text-center" variants={fadeIn} initial="hidden" animate="visible">
+        <motion.h2
+          className="text-2xl font-bold mb-6 text-center"
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+        >
           BGMI Tournament Slot Registration
         </motion.h2>
 
@@ -181,6 +197,7 @@ const SlotPage = () => {
           </motion.p>
         )}
 
+        {/* Form */}
         <motion.form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Game Info */}
           <motion.h3 className="text-xl font-semibold text-yellow-300" variants={fadeIn}>🎮 Game Details</motion.h3>
@@ -197,7 +214,7 @@ const SlotPage = () => {
           <motion.select {...register("slot", { required: "Slot selection is required" })} className="w-full p-3 rounded bg-black/40 text-black text-white border border-gray-600 focus:outline-none">
             <option value="" disabled>Select a slot</option>
             {slots.map((slot) => (
-              <option key={slot} className="text-white" value={slot} disabled={takenSlots.includes(slot)}>
+              <option key={slot} value={slot} disabled={takenSlots.includes(slot)}>
                 Slot {slot} {takenSlots.includes(slot) ? "(Taken)" : ""}
               </option>
             ))}

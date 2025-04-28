@@ -101,6 +101,15 @@ export default function UserRegister() {
           <Loading />
         </div>
       )}
+      {/* Attracting Text */}
+      <div className="absolute top-20 text-center px-4 md:px-0">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-yellow-500 drop-shadow-lg">
+          New recruit, welcome to the arena!
+        </h1>
+        <p className="text-gray-300 text-sm md:text-lg mt-2">
+          Create your account and carve your legend on the battlefield.
+        </p>
+      </div>
 
       {/* Error Message for Logged-In Users */}
       {errorMessage && (

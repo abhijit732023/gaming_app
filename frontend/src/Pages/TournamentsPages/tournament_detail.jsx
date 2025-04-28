@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { ENV_File, Loading } from "../../FilesPaths/allpath.js";
+import { ENV_File, Loading, Header, MobileMenu } from "../../FilesPaths/allpath.js";
 import {
   FaGamepad,
   FaCalendarAlt,
@@ -62,19 +62,30 @@ const TournamentDetail = () => {
 
   return (
     <div
-      className="relative min-h-screen flex items-center justify-center px-4 py-10"
+      className="relative min-h-screen flex flex-col items-center justify-start px-4 py-10"
       style={{
         backgroundImage: `url(${BgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+      {/* ======== Added MobileMenu and Header components ========= */}
+      {/* Mobile Menu (for small screens) */}
+      <div className="block md:hidden">
+        <MobileMenu /> {/* Show MobileMenu for small screens */}
+      </div>
+      <div className="hidden md:block">
+        <Header /> {/* Show Header for medium and larger screens */}
+      </div>
+      {/* =========================================================== */}
+
+      {/* Black overlay */}
       <div className="absolute inset-0 bg-black opacity-70"></div>
 
-      <div>
+      <div className="relative z-10 mt-24">
         {/* Gear Up Heading */}
         <motion.h2
-          className="relative z-10 text-3xl md:text-4xl font-extrabold text-center text-yellow-400 drop-shadow-lg mb-8"
+          className="text-3xl md:text-4xl font-extrabold text-center text-yellow-400 drop-shadow-lg mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -84,7 +95,7 @@ const TournamentDetail = () => {
 
         {/* Details Card */}
         <motion.div
-          className="relative z-10 max-w-5xl w-full bg-white/10 backdrop-blur-md rounded-xl shadow-2xl text-white  pt-4 p-8 space-y-6"
+          className="max-w-5xl w-full bg-white/10 backdrop-blur-md rounded-xl shadow-2xl text-white pt-4 p-8 space-y-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -98,33 +109,31 @@ const TournamentDetail = () => {
             {/* Tournament Details */}
             <div className="space-y-3 text-lg">
               <p>
-                <FaUsers className="inline mr-2 text-green-300" />{" "}
+                <FaUsers className="inline mr-2 text-green-300" />
                 <strong>Total Teams:</strong> {tournament?.totalTeams || "16"}
               </p>
               <p>
-                <FaMapMarkedAlt className="inline mr-2 text-purple-300" />{" "}
+                <FaMapMarkedAlt className="inline mr-2 text-purple-300" />
                 <strong>Map:</strong> {tournament?.roomType || "Erangel"}
               </p>
               <p>
-                <FaMoneyBill className="inline mr-2 text-yellow-300" />{" "}
+                <FaMoneyBill className="inline mr-2 text-yellow-300" />
                 <strong>Entry Fee:</strong> ₹{tournament?.entryFee}
               </p>
               <p>
-                <FaTrophy className="inline mr-2 text-pink-400" />{" "}
+                <FaTrophy className="inline mr-2 text-pink-400" />
                 <strong>Prize:</strong> ₹{tournament?.price}
               </p>
               <p>
-                <FaCalendarAlt className="inline mr-2 text-orange-300" />{" "}
-                <strong>Date:</strong>{" "}
-                {new Date(tournament?.dateTime).toLocaleDateString()}
+                <FaCalendarAlt className="inline mr-2 text-orange-300" />
+                <strong>Date:</strong> {new Date(tournament?.dateTime).toLocaleDateString()}
               </p>
               <p>
-                <FaClock className="inline mr-2 text-cyan-300" />{" "}
-                <strong>Time:</strong>{" "}
-                {new Date(tournament?.dateTime).toLocaleTimeString()}
+                <FaClock className="inline mr-2 text-cyan-300" />
+                <strong>Time:</strong> {new Date(tournament?.dateTime).toLocaleTimeString()}
               </p>
               <p>
-                <FaGamepad className="inline mr-2 text-red-400" />{" "}
+                <FaGamepad className="inline mr-2 text-red-400" />
                 <strong>Match Type:</strong> {tournament?.gameMode || "Unknown"}
               </p>
             </div>

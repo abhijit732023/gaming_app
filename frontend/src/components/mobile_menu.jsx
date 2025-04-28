@@ -8,6 +8,7 @@ import {
   FaClipboardList,
   FaSignInAlt,
   FaUserPlus,
+  FaCommentDots
 } from "react-icons/fa";
 import { useAuth, Loading } from "../FilesPaths/allpath.js";
 import { motion, AnimatePresence } from "framer-motion";
@@ -138,6 +139,17 @@ const MobileMenu = () => {
                     >
                       <MenuItem icon={<FaClipboardList />} label="My Tournaments" onClick={() => navigateTo(`/mytournament/${userId}`)} />
                     </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }} // slightly different delay for better flow
+                    >
+                      <MenuItem
+                        icon={<FaCommentDots />}
+                        label="Feedback"
+                        onClick={() => navigateTo("/feedback")}
+                      />
+                    </motion.div>
 
                     <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
@@ -164,6 +176,7 @@ const MobileMenu = () => {
                     >
                       <MenuItem icon={<FaUserPlus />} label="Signup" onClick={() => navigateTo("/register")} />
                     </motion.div>
+
                   </>
                 )}
               </div>

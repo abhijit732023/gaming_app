@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import BgImage from "../images/money2.webp"; // Add your background image path
-import { ENV_File } from "../../FilesPaths/allpath";
+import BgImage from "../images/money2.webp"; // Background image
+import { ENV_File, Header, MobileMenu } from "../../FilesPaths/allpath";
 
 export default function PayNow() {
   const [payment, setPaymentState] = useState(false);
   const [countdown, setCountdown] = useState(5); // Countdown state
-  const { team_id, id, amount, userid } = useParams(); // Extract params
-  const navigate = useNavigate(); // Initialize navigate function
+  const { team_id, id, amount, userid } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log({ team_id, id, amount, userid }); // Debugging
-  }, [team_id, id, amount, userid]); // Log params on component mount
+    console.log({ team_id, id, amount, userid });
+  }, [team_id, id, amount, userid]);
 
   useEffect(() => {
     if (payment) {
@@ -21,16 +21,15 @@ export default function PayNow() {
         setCountdown((prev) => {
           if (prev === 1) {
             clearInterval(countdownInterval);
-            // Navigate directly using userid from useParams
             setTimeout(() => {
-              navigate(`/mytournament/${userid}`); // Use userid directly
+              navigate(`/mytournament/${userid}`);
             }, 0);
           }
           return prev - 1;
         });
       }, 1000);
 
-      return () => clearInterval(countdownInterval); // Cleanup interval on unmount
+      return () => clearInterval(countdownInterval);
     }
   }, [payment, navigate, userid]);
 
@@ -43,7 +42,7 @@ export default function PayNow() {
       const orderData = response.data;
 
       const options = {
-        key: `${ENV_File.razor_key_id}`, // Replace with your Razorpay key ID
+        key: `${ENV_File.razor_key_id}`,
         amount: orderData.amount,
         currency: "INR",
         name: "Tournament Entry",
@@ -58,7 +57,7 @@ export default function PayNow() {
               razorpay_signature: response.razorpay_signature,
               teamId: team_id,
             });
-            setPaymentState(true); // Set payment state to true
+            setPaymentState(true);
           } catch (error) {
             console.error("Verification error:", error.response?.data || error.message);
             alert("Payment verification failed. Please try again.");
@@ -83,7 +82,7 @@ export default function PayNow() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center text-white bg-gray-100 px-4"
+      className="relative min-h-screen flex flex-col"
       style={{
         backgroundImage: `url(${BgImage}?v=1)`,
         backgroundSize: "cover",
@@ -91,54 +90,70 @@ export default function PayNow() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="backdrop-blur-2xl bg-grey/40 text-white shadow-xl rounded-xl p-8 max-w-md w-full text-center relative z-10">
-        <div className="text-blue-600 text-4xl mb-4 flex justify-center">
-          <FaMoneyCheckAlt />
-        </div>
-        <h2 className="text-2xl font-bold mb-2 ">Tournament Payment</h2>
-        <p className=" mb-6 text-gray-300">
-          Complete your payment to confirm your team’s entry into the tournament.
-        </p>
+      {/* Black Overlay */}
+      <div className="absolute inset-0 bg-black opacity-60 z-0"></div>
 
-        <div className=" text-left mb-4 text-sm text-white font-extralight space-y-1">
-          <p><strong>Team ID :</strong> {team_id}</p>
-          <p><strong>Tournament ID :</strong> {id}</p>
-          <p><strong>Amount :</strong> ₹{amount}</p>
+      {/* Header for Desktop and MobileMenu for Mobile */}
+      <div className="relative z-40 w-full">
+        {/* Desktop Header */}
+        <div className="hidden md:block">
+          <Header />
         </div>
 
-        {payment ? (
-          <>
-            <p className="text-green-600 font-semibold text-lg mb-4">
-              ✅ Payment successful! See you in the arena. 🎮
-            </p>
-            <p className="text-yellow-400 text-sm">
-              Redirecting to the tournament page in {countdown} seconds...
-            </p>
-          </>
-        ) : (
-          <button
-            onClick={handlePayment}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200"
-          >
-            Pay ₹{amount} Now
-          </button>
-        )}
-
-        <p className="text-xs text-gray-400 mt-4">
-          You’ll be redirected to Razorpay to complete your payment securely.
-        </p>
-
-        {/* Back Link */}
-        <button
-          onClick={() => navigate(-1)} // Navigate to the previous page
-          className="mt-6 text-blue-400 hover:underline"
-        >
-          ← Back to Previous Page
-        </button>
+        {/* Mobile Menu */}
+        <div className="block md:hidden">
+          <MobileMenu />
+        </div>
       </div>
 
-      {/* Black Overlay */}
-      <div className="absolute inset-0 bg-black opacity-60"></div>
+      {/* Payment Section */}
+      <div className="relative z-10 flex-grow flex items-center justify-center px-4 py-8">
+        <div className="backdrop-blur-2xl bg-grey/40 text-white shadow-xl rounded-xl p-8 max-w-md w-full text-center">
+          <div className="text-blue-600 text-4xl mb-4 flex justify-center">
+            <FaMoneyCheckAlt />
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Tournament Payment</h2>
+          <p className="mb-6 text-gray-300">
+            Complete your payment to confirm your team’s entry into the tournament.
+          </p>
+
+          <div className="text-left mb-4 text-sm text-white font-extralight space-y-1">
+            <p><strong>Team ID :</strong> {team_id}</p>
+            <p><strong>Tournament ID :</strong> {id}</p>
+            <p><strong>Amount :</strong> ₹{amount}</p>
+          </div>
+
+          {payment ? (
+            <>
+              <p className="text-green-600 font-semibold text-lg mb-4">
+                ✅ Payment successful! See you in the arena. 🎮
+              </p>
+              <p className="text-yellow-400 text-sm">
+                Redirecting to the tournament page in {countdown} seconds...
+              </p>
+            </>
+          ) : (
+            <button
+              onClick={handlePayment}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200"
+            >
+              Pay ₹{amount} Now
+            </button>
+          )}
+
+          <p className="text-xs text-gray-400 mt-4">
+            You’ll be redirected to Razorpay to complete your payment securely.
+          </p>
+
+          {/* Back Link */}
+          <button
+            onClick={() => navigate(-1)}
+            className="mt-6 text-blue-400 hover:underline"
+          >
+            ← Back to Previous Page
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
