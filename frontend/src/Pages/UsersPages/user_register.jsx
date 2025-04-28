@@ -27,7 +27,7 @@ export default function UserRegister() {
       setErrorMessage("You are already logged in. Please logout first to access the registration page.");
       setTimeout(() => {
         navigate("/profile"); // Redirect to the profile page or another appropriate page
-      }, 3000);
+      }, 5000);
     }
   }, [user, navigate]);
 
@@ -69,7 +69,7 @@ export default function UserRegister() {
       } finally {
         setIsLoading(false);
       }
-    }, 2000);
+    }, 4000);
   };
 
   return (

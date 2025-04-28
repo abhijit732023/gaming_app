@@ -13,11 +13,13 @@ function Mytournament() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user is not available or user._id is not available
+    if (!user || !user._id) {
+      navigate("/login"); // Redirect to login if user or user._id is not available
+      return;
+    }
+
     const fetchUserTournaments = async () => {
-      if (!user || !user._id) {
-        console.warn("User or user ID is not available yet.");
-        return;
-      }
       try {
         const response = await axios.get(
           `${ENV_File.backendURL}/team/mytournament/user/${user._id}`,
@@ -32,8 +34,9 @@ function Mytournament() {
         setLoading(false);
       }
     };
+
     fetchUserTournaments();
-  }, [user?._id]);
+  }, [user, navigate]); // Add navigate to the dependency array
 
   if (loading) {
     return (
@@ -136,15 +139,6 @@ function Mytournament() {
                       Pay Now ₹{tournament.paymentAmount}
                     </button>
                   )}
-
-                  {/* <button
-                    onClick={() =>
-                      navigate(`/tournament/tournament_id/${tournament.tournamentId}`)}
-                    className={`bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-2 rounded-lg ${tournament.paymentStatus === "pending" ? "w-1/2" : "w-full"
-                      }`}
-                  >
-                    View Details 🚀
-                  </button> */}
                 </div>
 
                 <span className="absolute inset-0 bg-blue-700 opacity-10 blur-lg rounded-xl pointer-events-none" />

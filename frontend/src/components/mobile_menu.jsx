@@ -55,8 +55,8 @@ const MobileMenu = () => {
         </div>
       )}
 
-      {/* Menu Toggle Button */}
-      <div className="fixed bottom-6 right-6 z-[60]">
+      {/* Menu Toggle Button (Visible on mobile only) */}
+      <div className="fixed bottom-6 right-6 z-[60] block md:hidden">
         <motion.button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="bg-yellow-400 p-4 rounded-full shadow-lg"
@@ -80,7 +80,7 @@ const MobileMenu = () => {
         </motion.button>
       </div>
 
-      {/* AnimatePresence for menu */}
+      {/* AnimatePresence for menu (Visible on mobile only) */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
