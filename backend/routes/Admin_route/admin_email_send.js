@@ -1,5 +1,6 @@
 import express from "express";
 import nodemailer from "nodemailer";
+import config from "../../config/config.js";
 
 const AdminEmailSend = express.Router();
 
@@ -7,8 +8,8 @@ const AdminEmailSend = express.Router();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "sonugautam83.00@gmail.com",
-    pass: "kgqbpjeddwxwbyhh", // <-- Your app password
+    user: `${config.email_user}`, // <-- Your email address
+    pass: `${config.email_password}`, // <-- Your app password
   },
 });
 
@@ -20,7 +21,7 @@ AdminEmailSend.post('/', async (req, res) => {
   try {
     for (const receiver of email) {
       await transporter.sendMail({
-        from: '"Team Gaming App" <sonugautam83.00@gmail.com>', // Sender name looks clean
+        from: `"Team BattleHub" ${config.email_user}`, // Sender name looks clean
         to: receiver,
         subject: subject,
         text: message, // Plain text version

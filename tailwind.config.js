@@ -15,8 +15,15 @@ module.exports = {
       animation: {
         bulletMove: 'bulletMove 0.5s linear forwards',
         muzzleFlash: 'muzzleFlash 0.2s ease-in-out',
+        'fade-in': 'fadeIn 1s ease-out forwards',
+
       },
-    
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
       
       fontFamily: {
         drawliner: ['Drawliner', 'sans-serif'],

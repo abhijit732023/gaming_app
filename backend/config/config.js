@@ -6,5 +6,7 @@ const config = {
     backendURl: process.env.VITE_BACKEND_URL,
     payment_key_id: process.env.VITE_KEY_ID,
     payment_key_secret: process.env.VITE_KEY_SECRET,
+    email_user: process.env.VITE_EMAIL_USER_ID,
+    email_password: process.env.VITE_EMAIL_PASSWORD,
 };
 export default config;

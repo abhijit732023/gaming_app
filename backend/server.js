@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import {AdminEmailSend,Slot_regi_router, Admin_fullcontrol_route,PaymentRouter,Auth_Middleware,Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
+import {Feedback_Route,AdminEmailSend,Slot_regi_router, Admin_fullcontrol_route,PaymentRouter,Auth_Middleware,Main_tournament, LogoutRouter, RegisterRouter, AdminLoginRoute, Admincreate, LoginRouter, config, CreateRoom } from './index.js';
 
 const app = express();
 
@@ -41,6 +41,7 @@ app.use('/payment', PaymentRouter); // Ensure this is exported correctly
 app.use('/admin', Admin_fullcontrol_route); // Ensure this is exported correctly
 app.use('/team',Slot_regi_router ); // Ensure this is exported correctly
 app.use('/email',AdminEmailSend ); // Ensure this is exported correctly
+app.use('/feedback',Feedback_Route ); // Ensure this is exported correctly
 
 // Handle unmatched routes
 app.use((req, res) => {

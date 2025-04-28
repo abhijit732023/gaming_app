@@ -14,7 +14,7 @@ import Admin_fullcontrol_route from "./routes/Admin_route/adminRoutes.js";
 import Slot_regi from './models/Tournament/slot_register.js';
 import Slot_regi_router from "./routes/Tournament_route/team_register.js";
 import AdminEmailSend from "./routes/Admin_route/admin_email_send.js";
-
+import Feedback_Route from "./routes/User_route/feedback_route.js";
 export {
     Slot_regi_router,
     Slot_regi,
@@ -32,6 +32,7 @@ export {
     Main_tournament,
     Auth_Middleware,
     AdminEmailSend,
+    Feedback_Route,
 
 
 }
