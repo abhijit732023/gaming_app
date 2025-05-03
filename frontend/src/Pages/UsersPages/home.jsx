@@ -193,8 +193,8 @@ const Home = () => {
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
             <ul className="space-y-2">
-              <li>Email: support@battlegroundshub.com</li>
-              <li>Phone: +91 98765 43210</li>
+              <li>Email: battlehub2025@gmail.com</li>
+              <li>Phone: +91 70217 66128</li>
               <li>Location: India</li>
             </ul>
           </div>
@@ -205,7 +205,6 @@ const Home = () => {
             <div className="flex space-x-4">
               <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500 transition">
                 <FaInstagram size={24} />
-
               </a>
               <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition">
                 <FaYoutube size={24} />
@@ -220,9 +219,15 @@ const Home = () => {
 
         {/* Bottom */}
         <div className="mt-10 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} BattleGrounds Hub. All Rights Reserved.
+          <p>By using this site, you agree to our
+            <a href="https://merchant.razorpay.com/policy/Q3DnuFWjPCZTYd/terms" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Terms & Conditions</a>,
+            <a href="https://merchant.razorpay.com/policy/Q3DnuFWjPCZTYd/refund" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Refund Policy</a>, and
+            <a href="https://merchant.razorpay.com/policy/Q3DnuFWjPCZTYd/privacy" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>.
+          </p>
+          <p>© {new Date().getFullYear()} BattleGrounds Hub. All Rights Reserved.</p>
         </div>
       </footer>
+
 
     </div>
   );
