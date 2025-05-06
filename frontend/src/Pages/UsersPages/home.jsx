@@ -220,11 +220,11 @@ const Home = () => {
         {/* Bottom */}
         <div className="mt-10 text-center text-gray-500 text-sm">
           <p>By using this site, you agree to our
-            <a href="/terms" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Terms & Conditions</a>,
-            <a href="/contact" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Contact</a>,
-            <a href="/refund" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Refund Policy</a>,
-            <a href="/privacy-policy" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Privacy Policy</a>, and
-            <a href="/support" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Support</a>.
+            <Link to="terms" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Terms & Conditions</Link>,
+            <Link to="contact" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Contact</Link>,
+            <Link to="refund" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Refund Policy</Link>,
+            <Link to="privacy-policy" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Privacy Policy</Link>, and
+            <Link to="support" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Support</Link>.
           </p>
           <p>© {new Date().getFullYear()} BattleGrounds Hub. All Rights Reserved.</p>
         </div>
