@@ -8,8 +8,9 @@ import {
   FaClipboardList,
   FaSignInAlt,
   FaUserPlus,
-  FaCommentDots
-} from "react-icons/fa";
+  FaCommentDots,
+  FaHeadset // Added icon for Support
+} from "react-icons/fa"; // Add support icon from react-icons
 import { useAuth, Loading } from "../FilesPaths/allpath.js";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -139,22 +140,24 @@ const MobileMenu = () => {
                     >
                       <MenuItem icon={<FaClipboardList />} label="My Tournaments" onClick={() => navigateTo(`/mytournament/${userId}`)} />
                     </motion.div>
+                    
+                    {/* Added Support link */}
                     <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4 }} // slightly different delay for better flow
+                      transition={{ delay: 0.5 }}
                     >
                       <MenuItem
-                        icon={<FaCommentDots />}
-                        label="Feedback"
-                        onClick={() => navigateTo("/feedback")}
+                        icon={<FaHeadset />}
+                        label="Support"
+                        onClick={() => navigateTo("/support")}
                       />
                     </motion.div>
 
                     <motion.div
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 }}
+                      transition={{ delay: 0.6 }}
                     >
                       <MenuItem icon={<FaSignOutAlt />} label="Logout" onClick={handleLogout} color="text-red-400" />
                     </motion.div>
@@ -176,7 +179,6 @@ const MobileMenu = () => {
                     >
                       <MenuItem icon={<FaUserPlus />} label="Signup" onClick={() => navigateTo("/register")} />
                     </motion.div>
-
                   </>
                 )}
               </div>

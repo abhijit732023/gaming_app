@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {FeedbackForm,Email_sendPage,Mytournament,TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
+import {Support,Refund,Privacy,Contact,Terms,FeedbackForm,Email_sendPage,Mytournament,TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
 import { AuthProvider } from '../ContextApi/contextapi.jsx';
 import './index.css'; // Import Tailwind CSS
 
@@ -141,6 +141,36 @@ const router = createBrowserRouter([
       <AuthGuard> {/* Ensure only logged-in users can access logout */}
         < FeedbackForm/>
       </AuthGuard>
+    )
+  },
+  {
+    path: '/refund',
+    element: (
+        < Refund/>
+    )
+  },
+  {
+    path: '/terms',
+    element: (
+        < Terms/>
+    )
+  },
+  {
+    path: '/contact',
+    element: (
+        < Contact/>
+    )
+  },
+  {
+    path: '/privacy-policy',
+    element: (
+        < Privacy/>
+    )
+  },
+  {
+    path: '/support',
+    element: (
+        < Support/>
     )
   }
 ]);

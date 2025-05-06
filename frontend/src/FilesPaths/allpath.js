@@ -27,6 +27,11 @@ import Email_sendPage from "../Pages/AdminPages/email_send";
 import ENV_File from "../../config/config";
 import RGBLight from "../components/register_success"; 
 import FeedbackForm from "../Pages/UsersPages/feedback";
+import Terms from "../Pages/UsersPages/terms";
+import Privacy from "../Pages/UsersPages/privacy";
+import Refund from "../Pages/UsersPages/refunded";
+import Contact from "../Pages/UsersPages/contact"; 
+import Support from "../Pages/UsersPages/support";
 
  export {
     EditTournament,
@@ -59,5 +64,11 @@ import FeedbackForm from "../Pages/UsersPages/feedback";
     ENV_File,
     RGBLight,
     FeedbackForm,
+    Terms,
+    Privacy,
+    Refund,
+    Contact,
+    Support
+
 }
 
