@@ -224,7 +224,8 @@ const Home = () => {
             <Link to="contact" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Contact</Link>,
             <Link to="refund" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Refund Policy</Link>,
             <Link to="privacy-policy" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Privacy Policy</Link>, and
-            <Link to="support" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Support</Link>.
+            <Link to="support" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Support</Link>,
+            <Link to="shipping-policy" className="text-white hover:text-yellow-500" target="_blank" rel="noopener noreferrer"> Shipping policy</Link>.
           </p>
           <p>© {new Date().getFullYear()} BattleGrounds Hub. All Rights Reserved.</p>
         </div>

@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Support,Refund,Privacy,Contact,Terms,FeedbackForm,Email_sendPage,Mytournament,TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
+import {ShippingPolicy,Support,Refund,Privacy,Contact,Terms,FeedbackForm,Email_sendPage,Mytournament,TournamentDetail,Home,UnpaidTeams,PaidTeams,ShowTeams,EditTournament,AdminTournamentPanel,PayNow,AuthGuard, UserLogin, UserRegister, AdminLogin, RoomForm, Slot_page, Tournament_page, User_profile, Logout } from './FilesPaths/allpath.js';
 import { AuthProvider } from '../ContextApi/contextapi.jsx';
 import './index.css'; // Import Tailwind CSS
 
@@ -171,6 +171,12 @@ const router = createBrowserRouter([
     path: '/support',
     element: (
         < Support/>
+    )
+  },
+  {
+    path: '/shipping-policy',
+    element: (
+        < ShippingPolicy/>
     )
   }
 ]);

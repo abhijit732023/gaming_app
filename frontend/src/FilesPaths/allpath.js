@@ -32,7 +32,7 @@ import Privacy from "../Pages/UsersPages/privacy";
 import Refund from "../Pages/UsersPages/refunded";
 import Contact from "../Pages/UsersPages/contact"; 
 import Support from "../Pages/UsersPages/support";
-
+import ShippingPolicy from "../Pages/UsersPages/shipping"; 
  export {
     EditTournament,
     AdminTournamentPanel,
@@ -68,7 +68,8 @@ import Support from "../Pages/UsersPages/support";
     Privacy,
     Refund,
     Contact,
-    Support
+    Support,
+    ShippingPolicy
 
 }
 
